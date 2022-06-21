@@ -107,7 +107,7 @@ In case it in within the scope, an auditor will perform a series of actions
 such as running wpscan in search of vulnerabilities, listing directories with
 dirbuster, etc.
 
-I have seen many ethical hacking teams develop the similar tools to try to
+I have seen many ethical hacking teams develop similar tools to try to
 improve processes over and over again. Generally an ethical hacker is very good
 at penetration testing but not at coding so these projects end up with a lot of
 spaghetti code and end up taking more time than they should.
