@@ -131,15 +131,27 @@ Everything would be logged and associated with a specific report. All this
 additional information would be very useful for future audits.
 
 ```
-                         ____    _    ____  _____ 
+                         ____    _    ____  _____
                         / ___|  / \  |  _ \|  ___|
-                        \___ \ / _ \ | |_) | |_   
-                         ___) / ___ \|  _ <|  _|  
-                        |____/_/   \_\_| \_\_|    
+                        \___ \ / _ \ | |_) | |_
+                         ___) / ___ \|  _ <|  _|
+                        |____/_/   \_\_| \_\_|
 
          - New needs will be added here as they get written -
 ```
 
+## Docker setup
+
+### Running a custom FTP Server as a tools storage backend
+
+```bash
+docker run -d \
+    -p 21:21 \
+    -p 21000-21010:21000-21010 \
+    -e USERS="sarf|sarf" \
+    --name "sarf_ftp" \
+    delfer/alpine-ftp-server
+```
 
 ## Author disclaimer
 
@@ -161,9 +173,9 @@ Your company can benefit from the development of this tool and from the
 advertisment of being a sponsor in the home page of the project.
 
 If you just want to support the project without any kind of advertisement
-for your company you can [Buy me a coffee](https://ko-fi.com/elchicodepython) 
+for your company you can [Buy me a coffee](https://ko-fi.com/elchicodepython)
 to make the project grow and keep me motivated.
 
 If you want some kind of retrieval get in touch through
 [Linkedin](https://es.linkedin.com/in/sam-sec) to sponsor
-**SARF** 
+**SARF**

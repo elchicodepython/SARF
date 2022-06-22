@@ -1,0 +1,31 @@
+messages:
+  # Name to be sent in messages as the emitter
+  # of the actions made with this instance
+  emitter: "ethical hacker email or identifier"
+
+  tools:
+    pub:
+      type: "rabbitmq"
+      connection_string: ""
+      queue: "tools"
+
+storage_backend:
+  tools:
+    type: "ftp"
+    conf:
+      user: "sarf"
+      password: "sarf"
+      host: "127.0.0.1"
+      basedir: "/ftp/sarf"
+
+workspace:
+  folder: "workspaces"
+  name: "default"
+
+environments:
+  development:
+    mock_data: true
+  production:
+    mock_data: false
+
+  current: "production"
