@@ -1,76 +1,13 @@
-<!doctype html>
+# Detected needs
 
-<head>
-        <title>SARF - Security Assesment and Reporting Framework</title>
-
-        <style>
-        * {
-            font-family: sans-serif;
-            margin: 0px;
-            padding: 0px;
-        }
-        pre {
-            max-width: 600px;
-            margin: auto;
-            padding-bottom: 1em;
-        }
-        h1 {
-            padding: 1em;
-            color: white;
-            background: #a30606;
-        }
-        h2, h3, h4, h5, h6, p{
-            max-width: 600px;
-            margin: auto;
-            padding-bottom: 1em;
-        }
-        p {
-            text-align: justify;
-        }
-        footer {
-            padding: 4em 0em;
-            margin-top: 2em;
-            background: #a30606;
-            color: white;
-            font-weight: bold;
-        }
-        footer a {
-            color: cyan;
-        }
-        .text-center {
-            text-align: center;
-        }
-
-        </style>
-    <meta name="charset" content="utf8"/>
-</head>
-
-<body>
-<h1 class="text-center">Security Assesment and Reporting Framework</h1>
-
-<div class="text-center">
-    <img src="assets/SARF.png"
-         alt="SARF. Security Assesment and Reporting Framework"/>
-</div>
-
-
-<p>
-Attention! This is currently in DRAFT status. It is a project that I imagined
-long ago and now I have begun to build.
-</p>
-
-<h2>Detected needs</h2>
-
-<p>
 When I was working as an ethical hacker I began to notice a series of needs in
 my day to day that this platform tries to solve.
-</p>
 
-<h3>Need for custom vulnerability templates</h3>
-<p>
+## Need for custom vulnerability templates
+
 I used to get frustrated spending a lot of time styling reports instead of
 using my knowledge to improve their content.
-<br><br>
+
 In my first attempt at automating reports I started a repository with
 vulnerability descriptions written by me. When I had to write a new
 vulnerability, I started from the template that I already had written. Then I
@@ -78,39 +15,35 @@ modified it to adjust the CVSS, to add the real impact on my client's business
 and add the evidence on how to exploit it. This allowed me to significantly
 increase the time I had to audit by reducing the time I spent generating the
 report.
-</p>
 
-<h3>Need for report templates and automatic report generation</h3>
+## Need for report templates and automatic report generation
 
-<p>
 As different clients had different report formats and particularities to
 remember this wasn't enough. The problem wasn't that I had to remember
 everything about each client. The problem was that we wanted all the members of
 the team to remember it and even if it was well noted and documented, human
 errors were common.
-<br><br>
+
 The data was correct but the formatting was often wrong and the style of a
 report is one of the most most valued parts by customers.
-<br><br>
+
 This led me to want to generate automatic reports with specific styles based
 on each client.
-<br><br>
+
 If vulnerabilities were stored in a structured way in some kind of data store
 associated with a report... A tool could use this data to generate a
 client-specific styled report.
-<br><br>
+
 That's why I thought it would be very interesting to be able to have multiple
 reporting engines with templates. A report engine could generate reports in a
 specific format like docx.
-<br><br>
+
 The templates could be made by business people without the need to write code
 directly in the report engine template language. For the docx report engine
 templates could be written in word.
-</p>
 
-<h3>Need for security assesment traceability</h3>
+## Need for security assesment traceability
 
-<p>
 I would often conduct an audit on an asset that a co-worker had previously
 audited a long time ago. Sometimes I was not convinced by some reported
 vulnerabilities and I considered that they could be a false positive. If the
@@ -121,62 +54,61 @@ that the vulnerability had been corrected, but it could also be that it had
 never existed. In the worst case, it could be that something not evidenced was
 causing the vulnerability to not be replicated and we did not know if it had
 been corrected.
-<br><br>
+
 This made me strongly desire to be able to have traceability of everything
 that was done in a report.
-<br><br>
+
 I wanted to have the outputs of all the tools. Not just what was added to the
 report. I wanted the reporter thoughts.
-<br><br>
+
 - When was an action performed?
 - Who performed it?
 - What was the result?
 - Any kind of special thoughts about it?
-<br><br>
+
 In summary: What has been done, when, by who and how.
 Wanted a detailed journal of the security assesment.
-<br><br>
+
 A "security assesment changelog".
-<br><br>
+
 This would also be very useful for continuing a security assessment that a
 co-worker had started.
-<br><br>
+
 During the audit process I saved all this data in a cherrytree that I
 consulted while generating the report. This allowed me to avoid trying the same
 action multiple times generating as little noise as possible.
 This was helpful with my reports as I was very disciplined about documenting
 everything. However, it added time and it was not something that we all did.
-<br><br>
+
 Sometimes I dreamed of a tool that would allow me to achieve all the actions I
 did in the cherrytree with less effort. I dreamed of being able to see all the
 actions that had been done during an audit. Both mine and those of my
 co-workers.
-</p>
 
-<h3>Need for tools interconnection</h3>
-<p>
+## Need for tools interconnection
+
 Ethical hacking tools are very varied.
-<br><br>
+
 When starting an audit one could launch an nmap and based on the results that
 this tool throws decide what to do.
-<br><br>
+
 Example:
 nmap discovers a web service on port 8080 where a wordpress is hosted.
 
 In case it in within the scope, an auditor will perform a series of actions
 such as running wpscan in search of vulnerabilities, listing directories with
 dirbuster, etc.
-<br><br>
+
 I have seen many ethical hacking teams develop similar tools to try to
 improve processes over and over again. Generally an ethical hacker is very good
 at penetration testing but not at coding so these projects end up with a lot of
 spaghetti code and end up taking more time than they should.
-<br><br>
+
 I dream of a pipeline of ethical hacking tools. A pipeline where any ethical
 hacker or developer can connect to decide to take an action based on the
 outputs of another tool. A pipeline that allows all the specific software
 developed in each team to be interconnected.
-<br><br>
+
 How do I propose to achieve this interconnection between such diverse
 applications? Through messages.
 
@@ -186,59 +118,8 @@ executed. Other tools will be able to subscribe and process the information
 that is of interest to them. Once this information is received, they will be
 able to perform actions such as notify users, launch other tools based on the
 output of previous ones, process the results and anything else you can imagine.
-<br><br>
+
 Everything would be logged and associated with a specific report. All this
 additional information would be very useful for future audits.
-</p>
-<br>
 
-<pre style="font-family: monospace; color: white;font-weight: bolder;
-            background: #a30606">
-
-                         ____    _    ____  _____
-                        / ___|  / \  |  _ \|  ___|
-                        \___ \ / _ \ | |_) | |_
-                         ___) / ___ \|  _ <|  _|
-                        |____/_/   \_\_| \_\_|
-
-</pre>
-<br>
-
-<h4 class="text-center">
-        - New needs will be added here as they get written -</h4>
-<h2>Author disclaimer</h2>
-<p>
-Although I work in English much of my time, I am not a native speaker and I may
-have made mistakes in the written documentation. If you find any mistake feel
-free to make a Pull Request to fix it. Thank you very much.
-</p>
-
-<h2>Sponsor this project</h2>
-<p>
-After several years designing the best architecture for the project as a
-hobby, I have simplified many parts and for the first time it has become
-feasible for a small team. This is going to be done and I would like it to be
-an open source project.
-<br><br>
-A series of economic resources are necessary for building this so im currently
-searching for sponsors.
-<br><br>
-Your company can benefit from the development of this tool and from the
-advertisment of being a sponsor in the home page of the project.
-</p>
-
-<p>If you just want to support the project without any kind of advertisement
-for your company you can
-    <a target="_blank" href="https://ko-fi.com/elchicodepython">
-       buy me a coffee</a> to make the project grow and keep me motivated.
-</p>
-<p>If you want some kind of retrieval get in touch through Linkedin to sponsor
-   <b>SARF</b</p>
-<footer>
-<p>
-Copyright Samuel López Saura 2022 |
-<a href="https://es.linkedin.com/in/sam-sec" target="_blank">Linkedin Contact
-</a>
-</p>
-</footer>
-</body>
+> New needs will be added here as they get written -
