@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Detected needs &mdash; SARF | Security Assesment and Reporting Framework 2022 documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/js/mermaid.js"></script>
+        <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+        <script >mermaid.initialize({startOnLoad:true});</script>
+        <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+        <script >mermaid.initialize({startOnLoad:true});</script>
+        <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+        <script >mermaid.initialize({startOnLoad:true});</script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="CLI" href="../cli/quickstart.html" />
+    <link rel="prev" title="SARF Roadmap" href="roadmap_2022.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html"><img src="../_static/logo_rtd.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="roadmap_2022.html">SARF Roadmap</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Detected needs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#need-for-custom-vulnerability-templates">Need for custom vulnerability templates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#need-for-report-templates-and-automatic-report-generation">Need for report templates and automatic report generation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#need-for-security-assesment-traceability">Need for security assesment traceability</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#need-for-tools-interconnection">Need for tools interconnection</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../cli/quickstart.html">CLI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../core/messages.html">CORE | Messages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="events.html">Talks in events</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">SARF | Security Assesment and Reporting Framework</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Detected needs</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/common/needs.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="detected-needs">
+<h1>Detected needs<a class="headerlink" href="#detected-needs" title="Permalink to this headline">¶</a></h1>
+<p>When I was working as an ethical hacker I began to notice a series of needs in
+my day to day that this platform tries to solve.</p>
+<div class="section" id="need-for-custom-vulnerability-templates">
+<h2>Need for custom vulnerability templates<a class="headerlink" href="#need-for-custom-vulnerability-templates" title="Permalink to this headline">¶</a></h2>
+<p>I used to get frustrated spending a lot of time styling reports instead of
+using my knowledge to improve their content.</p>
+<p>In my first attempt at automating reports I started a repository with
+vulnerability descriptions written by me. When I had to write a new
+vulnerability, I started from the template that I already had written. Then I
+modified it to adjust the CVSS, to add the real impact on my client’s business
+and add the evidence on how to exploit it. This allowed me to significantly
+increase the time I had to audit by reducing the time I spent generating the
+report.</p>
+</div>
+<div class="section" id="need-for-report-templates-and-automatic-report-generation">
+<h2>Need for report templates and automatic report generation<a class="headerlink" href="#need-for-report-templates-and-automatic-report-generation" title="Permalink to this headline">¶</a></h2>
+<p>As different clients had different report formats and particularities to
+remember this wasn’t enough. The problem wasn’t that I had to remember
+everything about each client. The problem was that we wanted all the members of
+the team to remember it and even if it was well noted and documented, human
+errors were common.</p>
+<p>The data was correct but the formatting was often wrong and the style of a
+report is one of the most most valued parts by customers.</p>
+<p>This led me to want to generate automatic reports with specific styles based
+on each client.</p>
+<p>If vulnerabilities were stored in a structured way in some kind of data store
+associated with a report… A tool could use this data to generate a
+client-specific styled report.</p>
+<p>That’s why I thought it would be very interesting to be able to have multiple
+reporting engines with templates. A report engine could generate reports in a
+specific format like docx.</p>
+<p>The templates could be made by business people without the need to write code
+directly in the report engine template language. For the docx report engine
+templates could be written in word.</p>
+</div>
+<div class="section" id="need-for-security-assesment-traceability">
+<h2>Need for security assesment traceability<a class="headerlink" href="#need-for-security-assesment-traceability" title="Permalink to this headline">¶</a></h2>
+<p>I would often conduct an audit on an asset that a co-worker had previously
+audited a long time ago. Sometimes I was not convinced by some reported
+vulnerabilities and I considered that they could be a false positive. If the
+evidence in the past document wasn’t enough to determine whether or not the
+vulnerability actually existed I was often in a bind. If I replicated the steps
+of the previous auditor and found no evidence of the vulnerability, it could be
+that the vulnerability had been corrected, but it could also be that it had
+never existed. In the worst case, it could be that something not evidenced was
+causing the vulnerability to not be replicated and we did not know if it had
+been corrected.</p>
+<p>This made me strongly desire to be able to have traceability of everything
+that was done in a report.</p>
+<p>I wanted to have the outputs of all the tools. Not just what was added to the
+report. I wanted the reporter thoughts.</p>
+<ul class="simple">
+<li><p>When was an action performed?</p></li>
+<li><p>Who performed it?</p></li>
+<li><p>What was the result?</p></li>
+<li><p>Any kind of special thoughts about it?</p></li>
+</ul>
+<p>In summary: What has been done, when, by who and how.
+Wanted a detailed journal of the security assesment.</p>
+<p>A “security assesment changelog”.</p>
+<p>This would also be very useful for continuing a security assessment that a
+co-worker had started.</p>
+<p>During the audit process I saved all this data in a cherrytree that I
+consulted while generating the report. This allowed me to avoid trying the same
+action multiple times generating as little noise as possible.
+This was helpful with my reports as I was very disciplined about documenting
+everything. However, it added time and it was not something that we all did.</p>
+<p>Sometimes I dreamed of a tool that would allow me to achieve all the actions I
+did in the cherrytree with less effort. I dreamed of being able to see all the
+actions that had been done during an audit. Both mine and those of my
+co-workers.</p>
+</div>
+<div class="section" id="need-for-tools-interconnection">
+<h2>Need for tools interconnection<a class="headerlink" href="#need-for-tools-interconnection" title="Permalink to this headline">¶</a></h2>
+<p>Ethical hacking tools are very varied.</p>
+<p>When starting an audit one could launch an nmap and based on the results that
+this tool throws decide what to do.</p>
+<p>Example:
+nmap discovers a web service on port 8080 where a wordpress is hosted.</p>
+<p>In case it in within the scope, an auditor will perform a series of actions
+such as running wpscan in search of vulnerabilities, listing directories with
+dirbuster, etc.</p>
+<p>I have seen many ethical hacking teams develop similar tools to try to
+improve processes over and over again. Generally an ethical hacker is very good
+at penetration testing but not at coding so these projects end up with a lot of
+spaghetti code and end up taking more time than they should.</p>
+<p>I dream of a pipeline of ethical hacking tools. A pipeline where any ethical
+hacker or developer can connect to decide to take an action based on the
+outputs of another tool. A pipeline that allows all the specific software
+developed in each team to be interconnected.</p>
+<p>How do I propose to achieve this interconnection between such diverse
+applications? Through messages.</p>
+<p>When executing a tool its output will be saved in a data backend and a message
+will be sent notifying whoever is listening that a particular tool has been
+executed. Other tools will be able to subscribe and process the information
+that is of interest to them. Once this information is received, they will be
+able to perform actions such as notify users, launch other tools based on the
+output of previous ones, process the results and anything else you can imagine.</p>
+<p>Everything would be logged and associated with a specific report. All this
+additional information would be very useful for future audits.</p>
+<blockquote>
+<div><p>New needs will be added here as they get written -</p>
+</div></blockquote>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="roadmap_2022.html" class="btn btn-neutral float-left" title="SARF Roadmap" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../cli/quickstart.html" class="btn btn-neutral float-right" title="CLI" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Samuel Lopez Saura.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

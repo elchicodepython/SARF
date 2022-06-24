@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CORE | Messages &mdash; SARF | Security Assesment and Reporting Framework 2022 documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/js/mermaid.js"></script>
+        <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+        <script >mermaid.initialize({startOnLoad:true});</script>
+        <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+        <script >mermaid.initialize({startOnLoad:true});</script>
+        <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+        <script >mermaid.initialize({startOnLoad:true});</script>
+        <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+        <script >mermaid.initialize({startOnLoad:true});</script>
+        <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+        <script >mermaid.initialize({startOnLoad:true});</script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Talks in events" href="../common/events.html" />
+    <link rel="prev" title="CLI" href="../cli/quickstart.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html"><img src="../_static/logo_rtd.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../common/roadmap_2022.html">SARF Roadmap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../common/needs.html">Detected needs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli/quickstart.html">CLI</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">CORE | Messages</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#generic-information">Generic information</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#required-infrastructure">Required infrastructure</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#app-messages">App Messages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#tools-messages">Tools Messages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tools-messages-structure">Tools Messages structure</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#listeners">Listeners</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../common/events.html">Talks in events</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">SARF | Security Assesment and Reporting Framework</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>CORE | Messages</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/core/messages.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="core-messages">
+<h1>CORE | Messages<a class="headerlink" href="#core-messages" title="Permalink to this headline">¶</a></h1>
+<p>Messages are one of the most important parts of <code class="docutils literal notranslate"><span class="pre">SARF</span></code>.
+All tools that use <code class="docutils literal notranslate"><span class="pre">SARF</span></code> communicate through them.</p>
+<p>In this section of the SARF we will see how this communication occurs.</p>
+<div class="section" id="generic-information">
+<h2>Generic information<a class="headerlink" href="#generic-information" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="required-infrastructure">
+<h3>Required infrastructure<a class="headerlink" href="#required-infrastructure" title="Permalink to this headline">¶</a></h3>
+<p>SARF messages are not tied to a specific technology. These can be sent through any piece of software that
+allows messages communication.
+Messages from one part of SARF may be sent over one technology and messages from another part over another.</p>
+<p>Instead of referring to a specific piece of infrastructure such as rabbitmq we will refer to the Messages abstraction with the keyword [app]Messages. Being [app] the part of SARF that we are working with.</p>
+</div>
+</div>
+<div class="section" id="app-messages">
+<h2>App Messages<a class="headerlink" href="#app-messages" title="Permalink to this headline">¶</a></h2>
+<div class="mermaid">
+            sequenceDiagram
+    sarf-&gt;&gt;[app]Messages: Send message
+        </div><div class="section" id="tools-messages">
+<h3>Tools Messages<a class="headerlink" href="#tools-messages" title="Permalink to this headline">¶</a></h3>
+<p>When a tool send his output to SARF this data is stored in a <code class="docutils literal notranslate"><span class="pre">Storage</span> <span class="pre">backend</span></code>, then a message with metadata is published using <code class="docutils literal notranslate"><span class="pre">[app]Messages</span></code>. In this way other tools could listen to this message in order
+to perform custom actions.</p>
+<div class="mermaid">
+            sequenceDiagram
+    app-&gt;&gt;sarf: Pipe output
+    sarf-&gt;&gt;Storage: Upload file
+    sarf-&gt;&gt;[app]Messages: Notify Tool execution
+        </div></div>
+<div class="section" id="tools-messages-structure">
+<h3>Tools Messages structure<a class="headerlink" href="#tools-messages-structure" title="Permalink to this headline">¶</a></h3>
+<p>Message metadata for tools contains the following fields:</p>
+<ul class="simple">
+<li><p>emitter: str</p></li>
+<li><p>tags: list[str]</p></li>
+<li><p>storage_type: str</p></li>
+<li><p>path: str</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="listeners">
+<h2>Listeners<a class="headerlink" href="#listeners" title="Permalink to this headline">¶</a></h2>
+<div class="mermaid">
+            sequenceDiagram
+    sarf-listener-1-&gt;&gt;[app]Messages: Listen messages
+    sarf-listener-2-&gt;&gt;[app]Messages: Listen messages
+    sarf-listener-1-&gt;&gt;MessageHandler-1: Process message
+    sarf-listener-2-&gt;&gt;MessageHandler-2: Process message
+        </div></div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../cli/quickstart.html" class="btn btn-neutral float-left" title="CLI" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../common/events.html" class="btn btn-neutral float-right" title="Talks in events" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Samuel Lopez Saura.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
