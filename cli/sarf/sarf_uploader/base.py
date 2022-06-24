@@ -1,23 +1,24 @@
 from abc import ABC, abstractmethod
+from dataclasses import dataclass
 
 
+@dataclass(frozen=True)
 class UploadContext:
-    def __init__(self, emitter: str, report_id: str, tags: str):
-        self.emitter = emitter
-        self.report_id = report_id
-        self.tags = tags
+    emitter: str
+    report_id: str
+    tags: str
 
 
+@dataclass(frozen=True)
 class StorageOutput:
-    def __init__(self, storage_type: str, path: str):
-        self.storage_type = storage_type
-        self.path = path
+    storage_type: str
+    path: str
 
 
+@dataclass(frozen=True)
 class NotificationData:
-    def __init__(self, context: UploadContext, storage_info: StorageOutput):
-        self.context = context
-        self.storage = storage_info
+    context: UploadContext
+    storage: StorageOutput
 
 
 class Storage(ABC):
