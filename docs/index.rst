@@ -11,14 +11,12 @@ SARF | Security Assesment and Reporting Framework
 When I was working as an ethical hacker I began to notice a series of needs in
 my day to day that this platform tries to solve.
 
-- Need for custom vulnerability templates.
-- Need for report templates and automatic report generation.
-- Need for security assesment traceability.
-- Need for tools interconnection.
-
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
+   common/roadmap_2022
    common/needs
    cli/quickstart
+   core/messages
+   common/events

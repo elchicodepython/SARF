@@ -2,11 +2,41 @@
 
 ## Installation
 
-- TODO
+`pip install sarf`
+
+This version of `SARF` works with a `FTP` Server as a storage backend
+and a `rabbitmq` as a pubsub.
+Installation of these two components is beyond the scope of this tutorial.
 
 ## Configuration
 
-- TODO
+Before continuing check you can access to the rabbitmq and the FTP.
+
+Once all the components are installed we can write SARF configuration file
+in /etc/sarf/config.yml. If this file does not exist, create it.
+
+```yaml
+messages:
+  # Name to be sent in messages as the emitter
+  # of the actions made with this instance
+  emitter: "ethical hacker email or identifier"
+
+  tools:
+    pub:
+      type: "rabbitmq"
+      connection_string: ""
+      queue: "tools"
+
+storage_backend:
+  tools:
+    type: "ftp"
+    conf:
+      user: "sarf"
+      password: "sarf"
+      host: "127.0.0.1"
+      basedir: "/ftp/sarf"
+
+```
 
 ## Usage
 
