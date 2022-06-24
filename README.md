@@ -1,6 +1,6 @@
 # SARF-Security-Assesment-and-Reporting-Framework
 
-![Project Logo](docs/assets/SARF.png)
+![Project Logo](docs/assets/common/logo_rtd.png)
 
 > Attention! This is currently in DRAFT status. It is a project that I imagined
   long ago and now I have begun to build.
