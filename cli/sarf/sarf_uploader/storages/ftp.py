@@ -1,7 +1,7 @@
 from io import BytesIO
 from ftplib import FTP, FTP_TLS
 
-from sarf_uploader.utils import generate_filename
+from ...sarf_uploader.utils import generate_filename
 
 from ..base import Storage, StorageOutput
 

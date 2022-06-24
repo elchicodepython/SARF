@@ -4,14 +4,14 @@ import argparse
 import sys
 from os import environ
 from typing import List
-from sarf_uploader.base import Storage, UploadContext
-from sarf_uploader.notification import UploadNotification
+from .sarf_uploader.base import Storage, UploadContext
+from .sarf_uploader.notification import UploadNotification
+from .sarf_uploader.utils import upload
 
+import dependency_injector
 from dependency_injector.wiring import Provide, inject
 
-from containers import Container
-
-from sarf_uploader.utils import upload
+from .containers import Container
 
 
 welcome_text = """
@@ -81,7 +81,7 @@ def process_stdin():
     return data
 
 
-if __name__ == "__main__":
+def main():
     container = Container()
     container.wire(modules=[__name__])
 
@@ -109,8 +109,17 @@ if __name__ == "__main__":
 
         if errors:
             sys.exit(1)
-
-        publish_tool_output(stdin, report_id, tags)
-
+        try:
+            publish_tool_output(stdin, report_id, tags)
+        except dependency_injector.errors.Error:
+            print(
+                "Error during dependency injection. Check configuration file")
+            print("Configuration file should exist in /etc/sarf/config.yml")
+            sys.exit(2)
     else:
         print(welcome_text)
+        print("Usage: sarf --help")
+
+
+if __name__ == "__main__":
+    main()
