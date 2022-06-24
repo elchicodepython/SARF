@@ -17,15 +17,3 @@ storage_backend:
       password: "sarf"
       host: "127.0.0.1"
       basedir: "/ftp/sarf"
-
-workspace:
-  folder: "workspaces"
-  name: "default"
-
-environments:
-  development:
-    mock_data: true
-  production:
-    mock_data: false
-
-  current: "production"
