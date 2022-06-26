@@ -36,6 +36,7 @@ def publish_tool_output(
     tool_data: bytes,
     report_id: str,
     tags: List[str],
+    stdout: False,
     tools_storage: Storage=Provide[Container.tools_storage_service],
     upload_notification: UploadNotification=Provide[Container.tools_notification_service],
     emitter: str=Provide[Container.config.messages.emitter]
@@ -50,6 +51,8 @@ def publish_tool_output(
         tools_storage,
         upload_notification
     )
+    if stdout:
+        sys.stdout.buffer.write(tool_data)
 
 
 def get_report_id() -> str:
@@ -72,6 +75,11 @@ def parse_args():
         help="Tags added to tool output message",
         required=False
         )
+    parser.add_argument(
+        "--stdout",
+        help="write ingested data to stdout",
+        default=False
+    )
     return parser.parse_args()
 
 
@@ -110,7 +118,7 @@ def main():
         if errors:
             sys.exit(1)
         try:
-            publish_tool_output(stdin, report_id, tags)
+            publish_tool_output(stdin, report_id, tags, args.stdout)
         except dependency_injector.errors.Error:
             print(
                 "Error during dependency injection. Check configuration file")
