@@ -1,12 +1,13 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
+from typing import List
 
 
 @dataclass(frozen=True)
 class UploadContext:
     emitter: str
     report_id: str
-    tags: str
+    tags: List[str]
 
 
 @dataclass(frozen=True)

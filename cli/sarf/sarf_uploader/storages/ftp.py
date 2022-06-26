@@ -3,7 +3,7 @@ from ftplib import FTP, FTP_TLS
 
 from ...sarf_uploader.utils import generate_filename
 
-from ..base import Storage, StorageOutput
+from ..base import Storage, StorageOutput, UploadContext
 
 
 class FTPStorage(Storage):
@@ -13,7 +13,7 @@ class FTPStorage(Storage):
         self.__client = FTPClass(host, user, password, timeout=timeout)
 
 
-    def upload(self, data: bytes) -> StorageOutput:
+    def upload(self, context: UploadContext, data: bytes) -> StorageOutput:
         """Upload file to ftp
         """
 

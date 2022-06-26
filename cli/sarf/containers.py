@@ -1,4 +1,5 @@
 from dependency_injector import containers, providers
+from awesome_messages.domain.publisher import MessagePublisher
 from awesome_messages.infra.rabbitmq.publisher import RabbitMessagePublisher
 
 from .sarf_uploader.notification import UploadNotification
@@ -12,12 +13,12 @@ class Container(containers.DeclarativeContainer):
         )
 
     # Messages Objects
-    rabbit_publisher = providers.Singleton(
+    rabbit_publisher: MessagePublisher = providers.Singleton(
         RabbitMessagePublisher,
         connection_string=config.messages.tools.pub.connection_string,
         queue=config.messages.tools.pub.queue
     )
-    messages_tools_publisher = providers.Selector(
+    messages_tools_publisher: MessagePublisher = providers.Selector(
         config.messages.tools.pub.type,
         rabbitmq=rabbit_publisher
     )

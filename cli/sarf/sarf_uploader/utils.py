@@ -9,7 +9,7 @@ def generate_filename() -> str:
 
 
 def upload(content: bytes, context: UploadContext, stor: Storage, notification: UploadNotification):
-    storage_info = stor.upload(content)
+    storage_info = stor.upload(context, content)
     notification.notify(
         NotificationData(
             context,

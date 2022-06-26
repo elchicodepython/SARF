@@ -3,7 +3,7 @@
 import argparse
 import sys
 from os import environ
-from typing import List
+from typing import List, Optional
 from .sarf_uploader.base import Storage, UploadContext
 from .sarf_uploader.notification import UploadNotification
 from .sarf_uploader.utils import upload
@@ -36,7 +36,7 @@ def publish_tool_output(
     tool_data: bytes,
     report_id: str,
     tags: List[str],
-    stdout: False,
+    stdout: bool = False,
     tools_storage: Storage=Provide[Container.tools_storage_service],
     upload_notification: UploadNotification=Provide[Container.tools_notification_service],
     emitter: str=Provide[Container.config.messages.emitter]
@@ -55,7 +55,7 @@ def publish_tool_output(
         sys.stdout.buffer.write(tool_data)
 
 
-def get_report_id() -> str:
+def get_report_id() -> Optional[str]:
     return environ.get("SARF_REPORT")
 
 
