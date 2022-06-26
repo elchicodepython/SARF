@@ -12,6 +12,7 @@ class UploadNotification:
                 "emitter": upload_output.context.emitter,
                 "report_id": upload_output.context.report_id,
                 "tags": upload_output.context.tags,
+                "storage_type": upload_output.storage.storage_type,
                 "path": upload_output.storage.path
             }
         )
