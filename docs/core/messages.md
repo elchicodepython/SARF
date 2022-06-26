@@ -42,6 +42,7 @@ Message metadata for tools contains the following fields:
 - emitter: str
 - tags: list[str]
 - storage_type: str
+- report_id
 - path: str
 
 
