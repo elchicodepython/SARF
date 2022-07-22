@@ -6,6 +6,18 @@
 
 This version of `SARF` works with a `FTP` Server as a storage backend
 and a `rabbitmq` as a pubsub.
+
+### Running a custom FTP Server as a tools storage backend
+
+```bash
+docker run -d \
+    -p 21:21 \
+    -p 21000-21010:21000-21010 \
+    -e USERS="sarf|sarf" \
+    --name "sarf_ftp" \
+    delfer/alpine-ftp-server
+```
+
 Installation of these two components is beyond the scope of this tutorial.
 
 ## Configuration
@@ -29,14 +41,14 @@ messages:
 
 storage_backend:
   tools:
-    type: "ftp"
-    conf:
-      user: "sarf"
-      password: "sarf"
-      host: "127.0.0.1"
-      basedir: "/ftp/sarf"
+    upload:
+      type: "ftp"
+      conf:
+        user: "sarf"
+        password: "sarf"
+        host: "127.0.0.1"
+        basedir: "/ftp/sarf"
 
-```
 
 ## Usage
 
