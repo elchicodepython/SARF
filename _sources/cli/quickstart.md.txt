@@ -18,8 +18,6 @@ docker run -d \
     delfer/alpine-ftp-server
 ```
 
-Installation of these two components is beyond the scope of this tutorial.
-
 ## Configuration
 
 Before continuing check you can access to the rabbitmq and the FTP.
@@ -48,7 +46,7 @@ storage_backend:
         password: "sarf"
         host: "127.0.0.1"
         basedir: "/ftp/sarf"
-
+```
 
 ## Usage
 

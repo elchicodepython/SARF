@@ -48,6 +48,10 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#usage">Usage</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#add-the-output-of-a-tool-to-sarf">Add the output of a tool to SARF</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../core/messages.html">CORE | Messages</a></li>
@@ -96,7 +100,6 @@ and a <code class="docutils literal notranslate"><span class="pre">rabbitmq</spa
     delfer/alpine-ftp-server
 </pre></div>
 </div>
-<p>Installation of these two components is beyond the scope of this tutorial.</p>
 </div>
 </div>
 <div class="section" id="configuration">
@@ -104,49 +107,47 @@ and a <code class="docutils literal notranslate"><span class="pre">rabbitmq</spa
 <p>Before continuing check you can access to the rabbitmq and the FTP.</p>
 <p>Once all the components are installed we can write SARF configuration file
 in /etc/sarf/config.yml. If this file does not exist, create it.</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span>messages:
-  # Name to be sent in messages as the emitter
-  # of the actions made with this instance
-  emitter: &quot;ethical hacker email or identifier&quot;
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">messages</span><span class="p">:</span>
+  <span class="c1"># Name to be sent in messages as the emitter</span>
+  <span class="c1"># of the actions made with this instance</span>
+  <span class="nt">emitter</span><span class="p">:</span> <span class="s">&quot;ethical</span><span class="nv"> </span><span class="s">hacker</span><span class="nv"> </span><span class="s">email</span><span class="nv"> </span><span class="s">or</span><span class="nv"> </span><span class="s">identifier&quot;</span>
 
-  tools:
-    pub:
-      type: &quot;rabbitmq&quot;
-      connection_string: &quot;&quot;
-      queue: &quot;tools&quot;
+  <span class="nt">tools</span><span class="p">:</span>
+    <span class="nt">pub</span><span class="p">:</span>
+      <span class="nt">type</span><span class="p">:</span> <span class="s">&quot;rabbitmq&quot;</span>
+      <span class="nt">connection_string</span><span class="p">:</span> <span class="s">&quot;&quot;</span>
+      <span class="nt">queue</span><span class="p">:</span> <span class="s">&quot;tools&quot;</span>
 
-storage_backend:
-  tools:
-    upload:
-      type: &quot;ftp&quot;
-      conf:
-        user: &quot;sarf&quot;
-        password: &quot;sarf&quot;
-        host: &quot;127.0.0.1&quot;
-        basedir: &quot;/ftp/sarf&quot;
-
-
-## Usage
-
-### Add the output of a tool to SARF
-
-The output of any console tool can be redirected to sarf. It doesn&#39;t matter if
-these are in plain text or binary.
-In order for sarf to prepare to receive the output of a tool, the `--ingest`
-flag must be added to it.
-
-`nmap 192.168.1.0/24 | sarf --ingest --tags nmap,network:192.168.1.0 --report lbk`
-
-`--tags` flag is optional. It adds tags to the received data that can be
-    very useful to interconnect with other tools.
-
-The received data must be associated with a report.
-The chosen report will be obtained from the environment variable SARF_REPORT.
-The chosen report can also be provided explicitly with the `--report` flag.
-
-&gt; This is all for now. SARF is at a very early stage of its development.
-  Give it a star on [github](https://github.com/elchicodepython/SARF-Security-Assesment-and-Reporting-Framework) to find out all its progress.
+<span class="nt">storage_backend</span><span class="p">:</span>
+  <span class="nt">tools</span><span class="p">:</span>
+    <span class="nt">upload</span><span class="p">:</span>
+      <span class="nt">type</span><span class="p">:</span> <span class="s">&quot;ftp&quot;</span>
+      <span class="nt">conf</span><span class="p">:</span>
+        <span class="nt">user</span><span class="p">:</span> <span class="s">&quot;sarf&quot;</span>
+        <span class="nt">password</span><span class="p">:</span> <span class="s">&quot;sarf&quot;</span>
+        <span class="nt">host</span><span class="p">:</span> <span class="s">&quot;127.0.0.1&quot;</span>
+        <span class="nt">basedir</span><span class="p">:</span> <span class="s">&quot;/ftp/sarf&quot;</span>
 </pre></div>
+</div>
+</div>
+<div class="section" id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="add-the-output-of-a-tool-to-sarf">
+<h3>Add the output of a tool to SARF<a class="headerlink" href="#add-the-output-of-a-tool-to-sarf" title="Permalink to this headline">¶</a></h3>
+<p>The output of any console tool can be redirected to sarf. It doesn’t matter if
+these are in plain text or binary.
+In order for sarf to prepare to receive the output of a tool, the <code class="docutils literal notranslate"><span class="pre">--ingest</span></code>
+flag must be added to it.</p>
+<p><code class="docutils literal notranslate"><span class="pre">nmap</span> <span class="pre">192.168.1.0/24</span> <span class="pre">|</span> <span class="pre">sarf</span> <span class="pre">--ingest</span> <span class="pre">--tags</span> <span class="pre">nmap,network:192.168.1.0</span> <span class="pre">--report</span> <span class="pre">lbk</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">--tags</span></code> flag is optional. It adds tags to the received data that can be
+very useful to interconnect with other tools.</p>
+<p>The received data must be associated with a report.
+The chosen report will be obtained from the environment variable SARF_REPORT.
+The chosen report can also be provided explicitly with the <code class="docutils literal notranslate"><span class="pre">--report</span></code> flag.</p>
+<blockquote>
+<div><p>This is all for now. SARF is at a very early stage of its development.
+Give it a star on <a class="reference external" href="https://github.com/elchicodepython/SARF-Security-Assesment-and-Reporting-Framework">github</a> to find out all its progress.</p>
+</div></blockquote>
 </div>
 </div>
 </div>
