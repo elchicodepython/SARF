@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
    name='sarf',
-   version='0.1.2',
+   version='0.2.0',
    author='Samuel López Saura',
    author_email='samuellopezsaura@gmail.com',
    packages=find_packages(),
