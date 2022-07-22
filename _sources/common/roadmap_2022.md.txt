@@ -2,9 +2,9 @@
 
 ## Roadmap 2022
 
-- CLI with capabilities to receive and processs console tools outputs
+- CLI with capabilities to receive and processs console tools outputs ✅
 - Docs with how to connect multiple tools
-- Message Handler that stores tools metadata in Database
+- Message Handler that stores tools metadata in Database ✅
 - Abstract Initial Projects Management API
 - Implement the first Project Management Backend and Frontend
 
