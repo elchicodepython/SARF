@@ -6,7 +6,7 @@
 - Docs with how to connect multiple tools
 - Message Handler that stores tools metadata in Database
 - Abstract Initial Projects Management API
-- Implement NocoDB as the first Project Management Backend and Frontend
+- Implement the first Project Management Backend and Frontend
 
 
 **Support this project**
