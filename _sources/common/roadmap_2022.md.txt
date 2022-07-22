@@ -2,9 +2,9 @@
 
 ## Roadmap 2022
 
-- [CLI with capabilities to receive and processs console tools outputs](https://elchicodepython.github.io/SARF-Security-Assesment-and-Reporting-Framework/cli/quickstart.html) ✅
+- [CLI with capabilities to receive and processs console tools outputs](../cli/quickstart) ✅
 - Docs with how to connect multiple tools
-- [Message Handler that stores tools metadata in Database](https://elchicodepython.github.io/SARF-Security-Assesment-and-Reporting-Framework/listeners/database.html) ✅
+- [Message Handler that stores tools metadata in Database](../listeners/database) ✅
 - Abstract Initial Projects Management API
 - Implement the first Project Management Backend and Frontend
 
