@@ -1,12 +1,11 @@
 from io import BytesIO
 from ftplib import FTP, FTP_TLS
 
-from ...sarf_uploader.utils import generate_filename
+from ..utils import generate_filename
+from ..base import StorageDownloader, StorageOutput, StorageUploader, UploadContext
 
-from ..base import Storage, StorageOutput, UploadContext
 
-
-class FTPStorage(Storage):
+class FTPStorage(StorageUploader, StorageDownloader):
     def __init__(self, user: str, password: str, host: str, basedir: str="/", timeout=10, secure=False):
         self.__basedir = basedir
         FTPClass = FTP_TLS if secure else FTP
@@ -29,3 +28,12 @@ class FTPStorage(Storage):
             "ftp",
             f"{self.__basedir}/{filename}"
         )
+
+    def download(self, path: str) -> bytes:
+        datafile = BytesIO()
+
+        with self.__client as ftp:
+            ftp.cwd(self.__basedir)
+            ftp.retrbinary(f"STOR {path}", datafile.write)
+
+        return datafile.read()

@@ -11,9 +11,10 @@ messages:
 
 storage_backend:
   tools:
-    type: "ftp"
-    conf:
-      user: "sarf"
-      password: "sarf"
-      host: "127.0.0.1"
-      basedir: "/ftp/sarf"
+    upload:
+      type: "ftp"
+      conf:
+        user: "sarf"
+        password: "sarf"
+        host: "127.0.0.1"
+        basedir: "/ftp/sarf"

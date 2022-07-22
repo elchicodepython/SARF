@@ -2,8 +2,8 @@ from dependency_injector import containers, providers
 from awesome_messages.domain.publisher import MessagePublisher
 from awesome_messages.infra.rabbitmq.publisher import RabbitMessagePublisher
 
-from .sarf_uploader.notification import UploadNotification
-from .sarf_uploader.storages.ftp import FTPStorage
+from .notifications.notification import UploadNotification
+from .storages.infra.ftp import FTPStorage
 
 
 class Container(containers.DeclarativeContainer):
@@ -24,17 +24,17 @@ class Container(containers.DeclarativeContainer):
     )
 
     # Storage objects
-    ftp_storage = providers.Singleton(
+    ftp_upload_storage = providers.Singleton(
         FTPStorage,
-        user=config.storage_backend.tools.conf.user,
-        password=config.storage_backend.tools.conf.password,
-        host=config.storage_backend.tools.conf.host,
-        basedir=config.storage_backend.tools.conf.basedir
+        user=config.storage_backend.tools.upload.conf.user,
+        password=config.storage_backend.tools.upload.conf.password,
+        host=config.storage_backend.tools.upload.conf.host,
+        basedir=config.storage_backend.tools.upload.conf.basedir
     )
 
-    tools_storage_service = providers.Selector(
-        config.storage_backend.tools.type,
-        ftp=ftp_storage
+    tools_upload_storage_service = providers.Selector(
+        config.storage_backend.tools.upload.type,
+        ftp=ftp_upload_storage
     )
 
     tools_notification_service = providers.Singleton(

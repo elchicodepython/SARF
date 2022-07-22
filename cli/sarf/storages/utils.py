@@ -1,7 +1,8 @@
 import uuid
 
-from .base import UploadContext, Storage, NotificationData
-from .notification import UploadNotification
+from .base import UploadContext, Storage
+from ..notifications.base import UploadNotificationData
+from ..notifications.notification import UploadNotification
 
 
 def generate_filename() -> str:
@@ -11,7 +12,7 @@ def generate_filename() -> str:
 def upload(content: bytes, context: UploadContext, stor: Storage, notification: UploadNotification):
     storage_info = stor.upload(context, content)
     notification.notify(
-        NotificationData(
+        UploadNotificationData(
             context,
             storage_info
         )

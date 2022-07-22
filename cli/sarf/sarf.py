@@ -4,9 +4,9 @@ import argparse
 import sys
 from os import environ
 from typing import List, Optional
-from .sarf_uploader.base import Storage, UploadContext
-from .sarf_uploader.notification import UploadNotification
-from .sarf_uploader.utils import upload
+from .storages.base import Storage, UploadContext
+from .notifications.notification import UploadNotification
+from .storages.utils import upload
 
 import dependency_injector
 from dependency_injector.wiring import Provide, inject
@@ -37,7 +37,7 @@ def publish_tool_output(
     report_id: str,
     tags: List[str],
     stdout: bool = False,
-    tools_storage: Storage=Provide[Container.tools_storage_service],
+    tools_storage: Storage=Provide[Container.tools_upload_storage_service],
     upload_notification: UploadNotification=Provide[Container.tools_notification_service],
     emitter: str=Provide[Container.config.messages.emitter]
 ):
