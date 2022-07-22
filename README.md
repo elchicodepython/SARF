@@ -20,7 +20,7 @@ my day to day that this platform tries to solve.
 - Need for custom vulnerability templates -> Status 0%
 - Need for report templates and automatic report generation -> Status 0%
 - Need for security assesment traceability -> Status 5%
-- Need for tools interconnection -> Status 20%
+- Need for tools interconnection -> Status 70%
 
 
 ## Sponsor this project
