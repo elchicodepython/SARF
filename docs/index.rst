@@ -19,4 +19,5 @@ my day to day that this platform tries to solve.
    common/needs
    cli/quickstart
    core/messages
+   listeners/database
    common/events
