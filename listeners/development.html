@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Database listeners &mdash; SARF | Security Assesment and Reporting Framework 2022 documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <title>Listeners development &mdash; SARF | Security Assesment and Reporting Framework 2022 documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
@@ -28,11 +28,13 @@
         <script >mermaid.initialize({startOnLoad:true});</script>
         <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
         <script >mermaid.initialize({startOnLoad:true});</script>
+        <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+        <script >mermaid.initialize({startOnLoad:true});</script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Listeners development" href="development.html" />
-    <link rel="prev" title="CORE | Messages" href="../core/messages.html" /> 
+    <link rel="next" title="Talks in events" href="../common/events.html" />
+    <link rel="prev" title="Database listeners" href="database.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -56,16 +58,12 @@
 <li class="toctree-l1"><a class="reference internal" href="../common/needs.html">Detected needs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../cli/quickstart.html">CLI</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../core/messages.html">CORE | Messages</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Database listeners</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#postgresql-tools">Postgresql Tools</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#installation">Installation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#configuration">Configuration</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#usage">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="database.html">Database listeners</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Listeners development</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#install-development-kit-dependencies">Install development kit dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#scaffold-your-listener-structure">Scaffold your listener structure</a></li>
 </ul>
 </li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="development.html">Listeners development</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../common/events.html">Talks in events</a></li>
 </ul>
 
@@ -83,9 +81,9 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Database listeners</li>
+      <li>Listeners development</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/listeners/database.md.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/listeners/development.md.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -93,46 +91,27 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="database-listeners">
-<h1>Database listeners<a class="headerlink" href="#database-listeners" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="postgresql-tools">
-<h2>Postgresql Tools<a class="headerlink" href="#postgresql-tools" title="Permalink to this headline">¶</a></h2>
-<p>This listener retrieve messages from SARF tools and write them into a Postgresql table.</p>
-<p><img alt="Postgresql inserted rows" src="../_images/inserted-tools-rows.png" /></p>
-<div class="section" id="installation">
-<h3>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">sarf_postgres_tools</span></code></p>
+  <div class="section" id="listeners-development">
+<h1>Listeners development<a class="headerlink" href="#listeners-development" title="Permalink to this headline">¶</a></h1>
+<p>Listeners are services that execute tasks based on the messages they collect
+from SARF. Thanks to them SARF can be extended infinitely.</p>
+<p>To develop your custom listener follow the next steps:</p>
+<div class="section" id="install-development-kit-dependencies">
+<h2>Install development kit dependencies<a class="headerlink" href="#install-development-kit-dependencies" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">sarf_listener</span> <span class="pre">cookiecutter</span></code></p>
 </div>
-<div class="section" id="configuration">
-<h3>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h3>
-<p>Configuration should be added inside /etc/sarf.config.yml.</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">listeners</span><span class="p">:</span>
-  <span class="nt">loglevel</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10</span>
-  <span class="nt">logfile</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/var/log/sarf/listeners.log</span>
-
-  <span class="c1"># Specific postgres_tools listener configuration</span>
-  <span class="nt">postgres_tools</span><span class="p">:</span>
-    <span class="nt">host</span><span class="p">:</span>
-    <span class="nt">port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">5432</span>
-    <span class="nt">database</span><span class="p">:</span>
-    <span class="nt">table</span><span class="p">:</span>
-    <span class="nt">user</span><span class="p">:</span>
-    <span class="nt">password</span><span class="p">:</span>
-    <span class="nt">datamap</span><span class="p">:</span>
-      <span class="c1"># key in message: column in database</span>
-      <span class="nt">tags</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">tags</span>
-      <span class="nt">emitter</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">emitter</span>
-      <span class="nt">storage_type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">storage_type</span>
-      <span class="nt">path</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">path</span>
-      <span class="nt">report_id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">report_id</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="usage">
-<h3>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">sarf_postgres_tools</span></code></p>
-<p><img alt="Service Running" src="../_images/service-running.png" /></p>
-</div>
+<div class="section" id="scaffold-your-listener-structure">
+<h2>Scaffold your listener structure<a class="headerlink" href="#scaffold-your-listener-structure" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">cookiecutter</span> <span class="pre">https://github.com/elchicodepython/SARF-Security-Assesment-and-Reporting-Framework</span> <span class="pre">--directory</span> <span class="pre">dev_kit/listeners</span></code></p>
+<p>Fill the cookiecutter with your listener specific information.
+This example is for a Splunk listener.</p>
+<p><img alt="CookieCutter Output" src="../_images/cookiecutter_output.png" /></p>
+<p>After filling all the required fields cookiecutter will generate a listener
+package structure.</p>
+<p><img alt="Generated listener tree" src="../_images/generated-listener-tree.png" /></p>
+<p>Add your custom code in <code class="docutils literal notranslate"><span class="pre">on_msg</span></code> method.
+This method will be called each time a message is received.</p>
+<p><img alt="Generated Listener code" src="../_images/generated-listener-code.png" /></p>
 </div>
 </div>
 
@@ -140,8 +119,8 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="../core/messages.html" class="btn btn-neutral float-left" title="CORE | Messages" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="development.html" class="btn btn-neutral float-right" title="Listeners development" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="database.html" class="btn btn-neutral float-left" title="Database listeners" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../common/events.html" class="btn btn-neutral float-right" title="Talks in events" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
