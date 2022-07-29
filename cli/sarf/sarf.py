@@ -162,6 +162,8 @@ def main():
             sys.exit(1)
         try:
             if args.upload_report:
+                if args.report_engine:
+                    tags.append(f'engine:{args.report_engine}')
                 publish_report_output(data, project_id, tags)
             else:
                 publish_tool_output(data, project_id, tags, args.stdout)
