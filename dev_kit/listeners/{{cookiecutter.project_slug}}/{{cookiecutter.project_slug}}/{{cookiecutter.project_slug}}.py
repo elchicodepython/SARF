@@ -32,8 +32,8 @@ def start(config: dict=Provide[Application.config],
 
     setup_logging("sarf_listener", config['listeners']['logfile'], config['listeners']['loglevel'])
 
-    postgres_handler = {{cookiecutter.handler_class_name}}(**config['listeners']['{{cookiecutter.project_slug}}'])
-    msg_listener.add_handler(postgres_handler)
+    handler = {{cookiecutter.handler_class_name}}(**config['listeners']['{{cookiecutter.project_slug}}'])
+    msg_listener.add_handler(handler)
 
     logger.info("Listening messages")
     try:
