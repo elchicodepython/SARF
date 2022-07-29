@@ -67,6 +67,10 @@ def parse_args():
         help="Upload the output of a tool to SARF"
     )
     parser.add_argument(
+        "--filename",
+        help="Path of the file to be uploaded"
+    )
+    parser.add_argument(
         "--report",
         help="Related report ID. If not provided will be gathered from SARF_REPORT env var"
     )
@@ -82,20 +86,22 @@ def parse_args():
     )
     return parser.parse_args()
 
-
-
 def process_stdin():
     data = sys.stdin.buffer.read()
     return data
 
+def get_bdata_from_filename(filename: str) -> bytes:
+    with open(filename, 'rb') as f:
+        data = f.read()
+    return data
 
 def main():
     container = Container()
     container.wire(modules=[__name__])
 
-    stdin = None
+    data = None
     if not sys.stdin.isatty():
-        stdin = process_stdin()
+        data = process_stdin()
 
     args = parse_args()
 
@@ -108,9 +114,17 @@ def main():
     # Ingest data
     if args.ingest:
         errors = False
-        if not stdin:
-            print("Pipe the output of a tool to SARF")
-            errors = True
+        if not data:
+            if not args.filename:
+                print("Pipe the output of a tool to SARF")
+                errors = True
+            else:
+                try:
+                    data = get_bdata_from_filename(args.filename)
+                except FileNotFoundError:
+                    print("File not found")
+                    errors = True
+
         if not report_id:
             print("Report ID should be provied with --report param or with SARF_REPORT env var")
             errors = True
@@ -118,7 +132,7 @@ def main():
         if errors:
             sys.exit(1)
         try:
-            publish_tool_output(stdin, report_id, tags, args.stdout)
+            publish_tool_output(data, report_id, tags, args.stdout)
         except dependency_injector.errors.Error:
             print(
                 "Error during dependency injection. Check configuration file")
