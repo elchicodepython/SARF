@@ -1,0 +1,9 @@
+{
+    "project_slug": "my_listener_package",
+    "listener_description": "My listener description",
+    "package_version": "0.1.0",
+    "author_name": "Humpty Dumpty",
+    "author_email": "me@example.com",
+    "license": "MIT",
+    "handler_class_name": "MyCustomHandler"
+}

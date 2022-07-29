@@ -3,18 +3,17 @@ from setuptools import setup, find_packages
 
 setup(
    name='{{cookiecutter.project_slug}}',
-   version='0.1.0',
-   author='Samuel López Saura',
-   author_email='samuellopezsaura@gmail.com',
+   version='{{cookiecutter.package_version}}',
+   author='{{cookiecutter.author_name}}',
+   author_email='{{cookiecutter.author_email}}',
    packages=find_packages(),
-   license='MIT',
-   url='https://github.com/elchicodepython/SARF-Security-Assesment-and-Reporting-Framework',
+   license='{{cookiecutter.license}}',
    classifiers=[
        "Programming Language :: Python :: 3",
        "License :: OSI Approved :: MIT License",
        "Operating System :: OS Independent",
    ],
-   description='This module allows you to save SARF tools messages into postgresql',
+   description='{{cookiecutter.listener_description}}',
    install_requires=[
        "sarf_listener",
    ],
