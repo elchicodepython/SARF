@@ -34,7 +34,7 @@ https://github.com/elchicodepython/SARF-Security-Assesment-and-Reporting-Framewo
 @inject
 def publish_tool_output(
     tool_data: bytes,
-    report_id: str,
+    project_id: str,
     tags: List[str],
     stdout: bool = False,
     tools_storage: Storage=Provide[Container.tools_upload_storage_service],
@@ -45,7 +45,7 @@ def publish_tool_output(
         tool_data,
         UploadContext(
             emitter,
-            report_id,
+            project_id,
             tags
         ),
         tools_storage,
@@ -55,8 +55,28 @@ def publish_tool_output(
         sys.stdout.buffer.write(tool_data)
 
 
-def get_report_id() -> Optional[str]:
-    return environ.get("SARF_REPORT")
+@inject
+def publish_report_output(
+    tool_data: bytes,
+    project_id: str,
+    tags: List[str],
+    tools_storage: Storage=Provide[Container.reports_upload_storage_service],
+    upload_notification: UploadNotification=Provide[Container.messages_reports_publisher],
+    emitter: str=Provide[Container.config.messages.emitter]
+):
+    upload(
+        tool_data,
+        UploadContext(
+            emitter,
+            project_id,
+            tags
+        ),
+        tools_storage,
+        upload_notification
+    )
+
+def get_project_id() -> Optional[str]:
+    return environ.get("SARF_PROJECT")
 
 
 def parse_args():
@@ -64,25 +84,34 @@ def parse_args():
     parser.add_argument(
         "--ingest",
         action="store_true",
-        help="Upload the output of a tool to SARF"
+        help="Upload an output to SARF"
     )
     parser.add_argument(
         "--filename",
         help="Path of the file to be uploaded"
     )
     parser.add_argument(
-        "--report",
-        help="Related report ID. If not provided will be gathered from SARF_REPORT env var"
+        "--project",
+        help="Related project ID. If not provided will be gathered from SARF_PROJECT env var"
     )
     parser.add_argument(
         "--tags",
-        help="Tags added to tool output message",
+        help="Tags added to the output message",
         required=False
         )
     parser.add_argument(
         "--stdout",
-        help="write ingested data to stdout",
+        help="Write the ingested data to stdout",
         default=False
+    )
+    parser.add_argument(
+        "--upload-report",
+        action="store_true",
+        help="Upload a report to SARF. This flag can be used by third party apps to use SARF uploading configured capabilities"
+    )
+    parser.add_argument(
+        "--report-engine",
+        help="Name of the report engine"
     )
     return parser.parse_args()
 
@@ -105,7 +134,7 @@ def main():
 
     args = parse_args()
 
-    report_id = args.report or get_report_id()
+    project_id = args.project or get_project_id()
 
     tags = []
     if args.tags:
@@ -125,14 +154,17 @@ def main():
                     print("File not found")
                     errors = True
 
-        if not report_id:
-            print("Report ID should be provied with --report param or with SARF_REPORT env var")
+        if not project_id:
+            print("Project ID should be provied with --project param or with SARF_PROJECT env var")
             errors = True
 
         if errors:
             sys.exit(1)
         try:
-            publish_tool_output(data, report_id, tags, args.stdout)
+            if args.upload_report:
+                publish_report_output(data, project_id, tags)
+            else:
+                publish_tool_output(data, project_id, tags, args.stdout)
         except dependency_injector.errors.Error:
             print(
                 "Error during dependency injection. Check configuration file")

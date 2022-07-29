@@ -29,7 +29,7 @@ CREATE TABLE tools (
 	storage_type VARCHAR ( 50 ) NOT NULL,
 	path VARCHAR ( 255 ) NOT NULL,
     emitter VARCHAR ( 255 ) NOT NULL,
-	report_id INTEGER NOT NULL
+	project_id INTEGER NOT NULL
 );
 
 """

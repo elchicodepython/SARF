@@ -9,6 +9,12 @@ messages:
       connection_string: ""
       queue: "tools"
 
+  reports:
+    pub:
+      type: "rabbitmq"
+      connection_string: ""
+      queue: "tools"
+
 storage_backend:
   tools:
     upload:
@@ -17,4 +23,13 @@ storage_backend:
         user: "sarf"
         password: "sarf"
         host: "127.0.0.1"
-        basedir: "/ftp/sarf"
+        basedir: "/ftp/sarf/tools"
+
+  reports:
+    upload:
+      type: "ftp"
+      conf:
+        user: "sarf"
+        password: "sarf"
+        host: "127.0.0.1"
+        basedir: "/ftp/sarf/reports"

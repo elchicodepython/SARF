@@ -12,19 +12,35 @@ class Container(containers.DeclarativeContainer):
         yaml_files=["sarf_config.yml", "/etc/sarf/config.yml"]
         )
 
-    # Messages Objects
-    rabbit_publisher: MessagePublisher = providers.Singleton(
+    # -- Messages --
+    # Tools Messages
+    tools_rabbit_publisher: MessagePublisher = providers.Singleton(
         RabbitMessagePublisher,
         connection_string=config.messages.tools.pub.connection_string,
         queue=config.messages.tools.pub.queue
     )
+
     messages_tools_publisher: MessagePublisher = providers.Selector(
         config.messages.tools.pub.type,
-        rabbitmq=rabbit_publisher
+        rabbitmq=tools_rabbit_publisher
     )
 
-    # Storage objects
-    ftp_upload_storage = providers.Singleton(
+    # Reports Messages
+    reports_rabbit_publisher: MessagePublisher = providers.Singleton(
+        RabbitMessagePublisher,
+        connection_string=config.messages.reports.pub.connection_string,
+        queue=config.messages.reports.pub.queue
+    )
+
+    messages_reports_publisher: MessagePublisher = providers.Selector(
+        config.messages.reports.pub.type,
+        rabbitmq=reports_rabbit_publisher
+    )
+
+    # -- Storage objects --
+
+    # Tools Storage
+    tools_ftp_upload_storage = providers.Singleton(
         FTPStorage,
         user=config.storage_backend.tools.upload.conf.user,
         password=config.storage_backend.tools.upload.conf.password,
@@ -34,7 +50,21 @@ class Container(containers.DeclarativeContainer):
 
     tools_upload_storage_service = providers.Selector(
         config.storage_backend.tools.upload.type,
-        ftp=ftp_upload_storage
+        ftp=tools_ftp_upload_storage
+    )
+
+    # Reports Storage
+    reports_ftp_upload_storage = providers.Singleton(
+        FTPStorage,
+        user=config.storage_backend.reports.upload.conf.user,
+        password=config.storage_backend.reports.upload.conf.password,
+        host=config.storage_backend.reports.upload.conf.host,
+        basedir=config.storage_backend.reports.upload.conf.basedir
+    )
+
+    reports_upload_storage_service = providers.Selector(
+        config.storage_backend.reports.upload.type,
+        ftp=reports_ftp_upload_storage
     )
 
     tools_notification_service = providers.Singleton(
