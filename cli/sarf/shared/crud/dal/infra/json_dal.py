@@ -1,5 +1,5 @@
 import json
-from typing import Dict, Optional
+from typing import Dict, Iterable, Optional
 
 from ..base import DALHandler
 
@@ -16,6 +16,9 @@ class JSONDatabase(DALHandler):
 
     def get(self, uuid: str) -> Optional[dict]:
         return self.__data.get(uuid)
+
+    def get_all(self) -> Iterable[dict]:
+        return self.__data.values()
 
     def add(self, item: dict) -> dict:
         if item['uuid'] in self.__data:

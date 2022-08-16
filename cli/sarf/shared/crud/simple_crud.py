@@ -1,25 +1,7 @@
-from abc import ABC, abstractmethod
 from dataclasses import asdict
-from typing import Optional
-from typing import TypeVar, Generic
+from typing import Optional, Iterable, TypeVar, Generic
 
-
-class DALHandler(ABC):
-    @abstractmethod
-    def get(self, uuid: str) -> Optional[dict]:
-        pass
-
-    @abstractmethod
-    def add(self, item: dict) -> dict:
-        pass
-
-    @abstractmethod
-    def delete(self, uuid: str):
-        pass
-
-    @abstractmethod
-    def commit(self):
-        pass
+from .dal.base import DALHandler
 
 
 T = TypeVar('T')
@@ -35,6 +17,11 @@ class SimpleCRUD(Generic[T]):
         item = self.__dal_handler.get(uuid)
         if item is not None:
             return self.__ModelClass(**item)
+
+    def get_all(self) -> Iterable[T]:
+        items = self.__dal_handler.get_all()
+        for item in items:
+            yield self.__ModelClass(**item)
 
     def add(self, item: T) -> T:
        return self.__ModelClass(**self.__dal_handler.add(asdict(item)))

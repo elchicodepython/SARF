@@ -1,10 +1,14 @@
 from abc import ABC, abstractmethod
-from typing import Optional
+from typing import Iterable, Optional
 
 
 class DALHandler(ABC):
     @abstractmethod
     def get(self, uuid: str) -> Optional[dict]:
+        pass
+
+    @abstractmethod
+    def get_all(self) -> Iterable[dict]:
         pass
 
     @abstractmethod
