@@ -3,6 +3,7 @@ import uuid
 from dataclasses import asdict
 from pprint import pprint
 
+from ..forms.form import Form
 from ..crud.simple_crud import SimpleCRUD
 
 
@@ -78,6 +79,27 @@ class CLICrudOperations(Generic[T]):
             data[row_sections[0]] = ':'.join(row_sections[1:])
         return data
 
+
+class CLIFormCrudOperations(CLICrudOperations, Generic[T]):
+    def __init__(
+        self,
+        model_class: type,
+        crud_handler: SimpleCRUD[T],
+        form: Form,
+        fields = None,
+        ):
+        super().__init__(model_class, crud_handler, fields=fields)
+        self._form = form
+
+    def add_interactive(self):
+        data = self._form.process_form(self._fields)
+
+        self._add_uuid_if_needed(data)
+        model = self._ModelClass(**data)
+
+        self._crud_handler.add(model)
+        self._crud_handler.commit()
+        print(f'[+] Saved with uuid {model.uuid}')
 
 
 def handle_cli_crud(cli_crud: CLICrudOperations, args):
