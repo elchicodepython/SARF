@@ -33,3 +33,29 @@ storage_backend:
         password: "sarf"
         host: "127.0.0.1"
         basedir: "/ftp/sarf/reports"
+
+crud:
+  companies:
+    type: json
+    conf:
+      filename: ~/.sarf/data/companies.json
+
+  projects:
+    type: json
+    conf:
+      filename: ~/.sarf/data/projects.json
+
+  reports:
+    type: json
+    conf:
+      filename: ~/.sarf/data/reports.json
+
+  vulnerabilities:
+    type: json
+    conf:
+      filename: ~/.sarf/data/vulnerabilities.json
+
+  vuln_templates:
+    type: json
+    conf:
+      filename: ~/.sarf/data/vuln_templates.json
