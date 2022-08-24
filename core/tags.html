@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Talks in events &mdash; SARF | Security Assesment and Reporting Framework 2022 documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <title>Tags &mdash; SARF | Security Assesment and Reporting Framework 2022 documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
@@ -18,10 +18,19 @@
         <script >mermaid.initialize({startOnLoad:true});</script>
         <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
         <script >mermaid.initialize({startOnLoad:true});</script>
+        <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+        <script >mermaid.initialize({startOnLoad:true});</script>
+        <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+        <script >mermaid.initialize({startOnLoad:true});</script>
+        <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+        <script >mermaid.initialize({startOnLoad:true});</script>
+        <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+        <script >mermaid.initialize({startOnLoad:true});</script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="Listeners development" href="../listeners/development.html" /> 
+    <link rel="next" title="Database listeners" href="../listeners/database.html" />
+    <link rel="prev" title="CORE | Messages" href="messages.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -41,14 +50,18 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="roadmap_2022.html">SARF Roadmap</a></li>
-<li class="toctree-l1"><a class="reference internal" href="needs.html">Detected needs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../common/roadmap_2022.html">SARF Roadmap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../common/needs.html">Detected needs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../cli/quickstart.html">CLI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../core/messages.html">CORE | Messages</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../core/tags.html">Tags</a></li>
+<li class="toctree-l1"><a class="reference internal" href="messages.html">CORE | Messages</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Tags</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#registered-tags">Registered tags</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#deprecated-tags">Deprecated tags</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../listeners/database.html">Database listeners</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../listeners/development.html">Listeners development</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Talks in events</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../common/events.html">Talks in events</a></li>
 </ul>
 
         </div>
@@ -65,9 +78,9 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Talks in events</li>
+      <li>Tags</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/common/events.md.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/core/tags.md.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -75,24 +88,29 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="talks-in-events">
-<h1>Talks in events<a class="headerlink" href="#talks-in-events" title="Permalink to this headline">¶</a></h1>
-<p>Register your talk using SARF this page.</p>
-<p>Please follow the following format to add a presentation in this page:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">## Conference | Talk name</span>
-
-<span class="n">Author</span><span class="p">:</span> <span class="n">Author</span>
-
-<span class="n">Language</span><span class="p">:</span> <span class="n">en</span><span class="o">|</span><span class="n">es</span><span class="o">|...</span>
-
-<span class="n">Description</span><span class="p">:</span> <span class="n">Description</span> <span class="p">(</span><span class="mi">2</span><span class="o">-</span><span class="mi">5</span> <span class="n">lines</span><span class="p">)</span>
-
-<span class="n">video</span> <span class="kn">from</span> <span class="nn">youtube</span><span class="o">/</span><span class="n">vimeo</span><span class="o">/</span><span class="n">etc</span>
-
-<span class="n">slides</span> <span class="p">(</span><span class="k">if</span> <span class="n">published</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">slideshare</span> <span class="ow">or</span> <span class="n">similar</span>
-
-<span class="n">Contact</span><span class="p">:</span> <span class="n">twitter</span><span class="p">,</span> <span class="n">linkedin</span><span class="p">,</span> <span class="n">whatever</span> <span class="p">(</span><span class="n">only</span> <span class="k">if</span> <span class="n">you</span> <span class="n">want</span><span class="p">)</span>
-</pre></div>
+  <div class="section" id="tags">
+<h1>Tags<a class="headerlink" href="#tags" title="Permalink to this headline">¶</a></h1>
+<p>Tags are a very important part of SARF as they provide metadata to connect
+multiple tools.</p>
+<p>You can create your own tags but if there is a tag registered for your purpose
+you should use it.</p>
+<p>If you create a custom tag for a tool please make a Merge Request adding it to
+this file.</p>
+<div class="section" id="registered-tags">
+<h2>Registered tags<a class="headerlink" href="#registered-tags" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>tool:nmap</p></li>
+<li><p>format:nmap_xml</p></li>
+<li><p>tool:nikto</p></li>
+<li><p>format:nikto_json</p></li>
+<li><p>tool:zap</p></li>
+<li><p>tool:burp</p></li>
+<li><p>format:png</p></li>
+</ul>
+</div>
+<div class="section" id="deprecated-tags">
+<h2>Deprecated tags<a class="headerlink" href="#deprecated-tags" title="Permalink to this headline">¶</a></h2>
+<p>None yet.</p>
 </div>
 </div>
 
@@ -100,7 +118,8 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="../listeners/development.html" class="btn btn-neutral float-left" title="Listeners development" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="messages.html" class="btn btn-neutral float-left" title="CORE | Messages" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../listeners/database.html" class="btn btn-neutral float-right" title="Database listeners" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
