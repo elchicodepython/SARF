@@ -23,6 +23,11 @@ class SimpleCRUD(Generic[T]):
         for item in items:
             yield self.__ModelClass(**item)
 
+    def contains(self, field: str, value: str) -> dict:
+        items = self.__dal_handler.contains(field, value)
+        for item in items:
+            yield self.__ModelClass(**item)
+
     def add(self, item: T) -> T:
        return self.__ModelClass(**self.__dal_handler.add(asdict(item)))
 

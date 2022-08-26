@@ -86,13 +86,12 @@ class CLIFormCrudOperations(CLICrudOperations, Generic[T]):
         model_class: type,
         crud_handler: SimpleCRUD[T],
         form: Form,
-        fields = None,
         ):
-        super().__init__(model_class, crud_handler, fields=fields)
+        super().__init__(model_class, crud_handler, fields=form.fields)
         self._form = form
 
     def add_interactive(self):
-        data = self._form.process_form(self._fields)
+        data = self._form.process_form()
 
         self._add_uuid_if_needed(data)
         model = self._ModelClass(**data)

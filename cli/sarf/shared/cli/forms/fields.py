@@ -1,4 +1,6 @@
+from typing import Generic, TypeVar, Iterable
 from PyInquirer import prompt
+from ...crud.simple_crud import SimpleCRUD
 
 
 class InputField:
@@ -52,4 +54,69 @@ class SelectField:
             'choices': conf.get('choices', []),
         }
         data = prompt([inquirer_field_structure], style=self.__style)
+        return data[name]
+
+class BooleanField:
+    def __init__(self, style=None):
+        self.__style = style
+
+    def parse_data(self, name, conf=None):
+        conf = conf or {}
+        inquirer_field_structure = {
+            'type': 'confirm',
+            'name': name,
+            'message': name,
+            'default': conf.get('default', True)
+        }
+        data = prompt([inquirer_field_structure], style=self.__style)
+        return data[name]
+
+
+
+T = TypeVar('T')
+
+class ForeignSelectField(Generic[T]):
+    def __init__(self, style=None):
+        self.__style = style
+
+    def search_items(self, search_field: str, crud: SimpleCRUD) -> Iterable[T]:
+        selecting_opts = True
+        while selecting_opts:
+            field_value = input(f"{search_field} to search: ")
+            items = crud.contains(
+                search_field,
+                field_value
+            )
+            items = list(items)
+            response = input(f"Found {len(items)} items. Continue? [Y]: ")
+            response = response.lower().strip()
+            if response in ("y", ""):
+                selecting_opts = False
+
+        return items
+
+    def parse_data(self, name, conf=None):
+
+        conf = conf or {}
+
+        if not conf.get("crud"):
+            raise ValueError("crud parametter required in field conf")
+
+        print(f"In the next step you are going to search for a {name}")
+        searching = True
+
+        while searching:
+            choices = [{"name": str(item), "value": item} for item in self.search_items(conf["field"], conf["crud"])]
+            choices.append({"name": "None of them. Repeat search.", "value": "none"})
+
+            inquirer_field_structure = {
+                'type': 'list',
+                'name': name,
+                'message': name,
+                'choices': conf.get('choices', choices),
+            }
+            data = prompt([inquirer_field_structure], style=self.__style)
+            if data[name] != "none":
+                searching = False
+
         return data[name]

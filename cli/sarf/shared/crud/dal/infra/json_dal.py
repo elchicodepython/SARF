@@ -20,6 +20,13 @@ class JSONDatabase(DALHandler):
     def get_all(self) -> Iterable[dict]:
         return self.__data.values()
 
+    def contains(
+        self,
+        field: str,
+        value: str
+        ) -> dict:
+        return [row for row in self.get_all() if value.lower() in row[field].lower()]
+
     def add(self, item: dict) -> dict:
         if item['uuid'] in self.__data:
             raise Exception("Identifier already exist")
