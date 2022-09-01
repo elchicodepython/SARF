@@ -4,6 +4,11 @@ import argparse
 import sys
 from os import environ
 from typing import List, Optional
+
+from .reports.cli import ReportsCliController
+from .vulnerabilities.cli import VulnerabilitiesCliController, VulnerabilyTemplateCliController
+from .projects.cli import ProjectsCliController
+
 from .storages.base import Storage, UploadContext
 from .notifications.notification import UploadNotification
 from .storages.utils import upload
@@ -113,6 +118,18 @@ def parse_args():
         "--report-engine",
         help="Name of the report engine"
     )
+
+    parser.add_argument("--projects", action="store_true")
+    parser.add_argument("--vulns", action="store_true")
+    parser.add_argument("--vuln-templates", action="store_true")
+    parser.add_argument("--reports", action="store_true")
+
+    parser.add_argument("--get", action="store", help="Retrieve a record")
+    parser.add_argument("--add", action="store", help="Add a record. Checkout syntax in sarf docs")
+    parser.add_argument('--addi', action="store_true", help="Add a record in a interactive way")
+    parser.add_argument("--delete", action="store", help="Delete a record")
+    parser.add_argument('--get-all', action="store_true", help="List all the records. WARNING: They can be a lot.")
+
     return parser.parse_args()
 
 def process_stdin():
@@ -126,7 +143,12 @@ def get_bdata_from_filename(filename: str) -> bytes:
 
 def main():
     container = Container()
-    container.wire(modules=[__name__])
+    container.wire(modules=[
+        __name__,
+        'sarf.projects.cli',
+        'sarf.vulnerabilities.cli',
+        'sarf.projects.cli',
+        'sarf.reports.cli'])
 
     data = None
     if not sys.stdin.isatty():
@@ -172,6 +194,14 @@ def main():
                 "Error during dependency injection. Check configuration file")
             print("Configuration file should exist in /etc/sarf/config.yml")
             sys.exit(2)
+    elif args.projects:
+        ProjectsCliController().handle_request(args, data)
+    elif args.vulns:
+        VulnerabilitiesCliController().handle_request(args, data)
+    elif args.vuln_templates:
+        VulnerabilyTemplateCliController().handle_request(args, data)
+    elif args.reports:
+        ReportsCliController().handle_request(args, data)
     else:
         print(welcome_text)
         print("Usage: sarf --help")

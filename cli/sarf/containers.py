@@ -4,6 +4,11 @@ from awesome_messages.infra.rabbitmq.publisher import RabbitMessagePublisher
 
 from .notifications.notification import UploadNotification
 from .storages.infra.ftp import FTPStorage
+from .shared.crud.simple_crud import SimpleCRUD
+from .shared.crud.dal.infra.json_dal import JSONDatabase
+from .reports.base import Report
+from .vulnerabilities.base import Vulnerability, VulnerabilityTemplate
+from .projects.base import Project
 
 
 class Container(containers.DeclarativeContainer):
@@ -70,4 +75,65 @@ class Container(containers.DeclarativeContainer):
     tools_notification_service = providers.Singleton(
         UploadNotification,
         messages_tools_publisher
+    )
+
+    # -- CRUD objects --
+
+    # Projects
+    projects_dal = providers.Selector(
+        config.crud.projects.type,
+        json=providers.Singleton(
+            JSONDatabase,
+            filename=config.crud.projects.conf.filename
+        )
+    )
+
+    projects_crud = providers.Singleton(
+        SimpleCRUD,
+        projects_dal,
+        Project
+    )
+
+    # Vulnerabilities
+    vulnerabilities_dal = providers.Selector(
+        config.crud.vulnerabilities.type,
+        json=providers.Singleton(
+            JSONDatabase,
+            filename=config.crud.vulnerabilities.conf.filename
+        )
+    )
+
+    vulnerabilities_crud = providers.Singleton(
+        SimpleCRUD,
+        vulnerabilities_dal,
+        Vulnerability
+    )
+
+    vuln_templates = providers.Selector(
+        config.crud.vulnerabilities.type,
+        json=providers.Singleton(
+            JSONDatabase,
+            filename=config.crud.vuln_templates.conf.filename
+        )
+    )
+
+    vuln_templates_crud = providers.Singleton(
+        SimpleCRUD,
+        vuln_templates,
+        VulnerabilityTemplate
+    )
+
+    # Reports
+    reports_dal = providers.Selector(
+        config.crud.reports.type,
+        json=providers.Singleton(
+            JSONDatabase,
+            filename=config.crud.reports.conf.filename
+        )
+    )
+
+    reports_crud = providers.Singleton(
+        SimpleCRUD,
+        reports_dal,
+        Report
     )

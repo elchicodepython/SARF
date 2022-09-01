@@ -38,7 +38,12 @@ class TextField:
             'default': conf.get('default', '')
         }
         data = prompt([inquirer_field_structure], style=self.__style)
-        return data[name]
+
+        value = data[name]
+        if conf.get("value_attr"):
+            value = getattr(value, conf["value_attr"])
+
+        return value
 
 
 class SelectField:
@@ -119,4 +124,8 @@ class ForeignSelectField(Generic[T]):
             if data[name] != "none":
                 searching = False
 
-        return data[name]
+        value = data[name]
+        if conf.get("value_attr"):
+            value = getattr(value, conf["value_attr"])
+
+        return value

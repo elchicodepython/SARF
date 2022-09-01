@@ -1,3 +1,4 @@
 dependency-injector
 awesome-messages
 pyyaml
+pyinquirer
