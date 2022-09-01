@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from typing import Dict
 
 class FieldsRegistry:
     def __init__(self):
@@ -14,7 +15,7 @@ class FieldsRegistry:
 class Form:
     def __init__(self, fields_registry: FieldsRegistry):
         self.__fields_registry = fields_registry
-        self.__form_fields = {}
+        self.__form_fields: Dict = {}
 
     def set_fields(self, fields: dict):
         self.__form_fields = fields

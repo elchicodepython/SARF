@@ -1,5 +1,5 @@
 from dataclasses import asdict
-from typing import Optional, Iterable, TypeVar, Generic
+from typing import Optional, Iterable, Generator, TypeVar, Generic
 
 from .dal.base import DALHandler
 
@@ -17,13 +17,14 @@ class SimpleCRUD(Generic[T]):
         item = self.__dal_handler.get(uuid)
         if item is not None:
             return self.__ModelClass(**item)
+        return None
 
     def get_all(self) -> Iterable[T]:
         items = self.__dal_handler.get_all()
         for item in items:
             yield self.__ModelClass(**item)
 
-    def contains(self, field: str, value: str) -> dict:
+    def contains(self, field: str, value: str) -> Generator[T, None, None]:
         items = self.__dal_handler.contains(field, value)
         for item in items:
             yield self.__ModelClass(**item)

@@ -7,7 +7,7 @@ cli_input_field = InputField()
 cli_text_field = TextField()
 cli_select_field = SelectField()
 cli_boolean_field = BooleanField()
-cli_foreign_select = ForeignSelectField()
+cli_foreign_select: ForeignSelectField = ForeignSelectField()
 
 cli_fields.add(cli_input_field, "input")
 cli_fields.add(cli_boolean_field, "boolean")

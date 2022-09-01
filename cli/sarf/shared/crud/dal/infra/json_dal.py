@@ -24,7 +24,7 @@ class JSONDatabase(DALHandler):
         self,
         field: str,
         value: str
-        ) -> dict:
+        ) -> Iterable[dict]:
         return [row for row in self.get_all() if value.lower() in row[field].lower()]
 
     def add(self, item: dict) -> dict:

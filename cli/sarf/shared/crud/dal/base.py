@@ -12,7 +12,7 @@ class DALHandler(ABC):
         pass
 
     @abstractmethod
-    def contains(self, field: str, value: str) -> dict:
+    def contains(self, field: str, value: str) -> Iterable[dict]:
         pass
 
     @abstractmethod

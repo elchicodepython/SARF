@@ -92,8 +92,8 @@ class ForeignSelectField(Generic[T]):
                 search_field,
                 field_value
             )
-            items = list(items)
-            response = input(f"Found {len(items)} items. Continue? [Y]: ")
+            items_list = list(items)
+            response = input(f"Found {len(items_list)} items. Continue? [Y]: ")
             response = response.lower().strip()
             if response in ("y", ""):
                 selecting_opts = False
