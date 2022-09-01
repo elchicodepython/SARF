@@ -18,15 +18,17 @@ from dependency_injector.wiring import Provide, inject
 
 from .containers import Container
 
+from . import __version__
 
-welcome_text = """
+
+welcome_text = f"""
    ____    _    ____  _____
   / ___|  / \  |  _ \|  ___|
   \___ \ / _ \ | |_) | |_
    ___) / ___ \|  _ <|  _|
   |____/_/   \_\_| \_\_|
 
-  Welcome to SARF - Development edition
+  Welcome to SARF - version {__version__}
   The Security Assesment and Reporting Framework.
 
 If you like this project please share it and give
