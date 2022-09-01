@@ -17,8 +17,8 @@ class ReportsCliController:
     @inject
     def __init__(
         self,
-        crud_handler: SimpleCRUD[Report] = Provide[Container.reports_crud],
-        projects_crud: SimpleCRUD[Project] = Provide[Container.projects_crud],
+        crud_handler: SimpleCRUD[Report] = Provide[Container.reports_crud], # type: ignore
+        projects_crud: SimpleCRUD[Project] = Provide[Container.projects_crud], # type: ignore
     ):
         self._crud_handler = crud_handler
         self._projects_crud = projects_crud

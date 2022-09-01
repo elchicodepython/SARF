@@ -10,7 +10,7 @@ class ProjectsCliController:
     @inject
     def __init__(
         self,
-        crud_handler: SimpleCRUD[Project] = Provide[Container.projects_crud],
+        crud_handler: SimpleCRUD[Project] = Provide[Container.projects_crud], # type: ignore
     ):
         self._crud_handler = crud_handler
 
