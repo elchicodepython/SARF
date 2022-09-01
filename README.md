@@ -2,8 +2,7 @@
 
 ![Project Logo](docs/assets/common/logo_rtd.png)
 
-> Attention! This is currently in DRAFT status. It is a project that I imagined
-  long ago and now I have begun to build.
+> This is currently an ALFA. It is a project that I imagined long ago and now I have begun to build.
 
 ## Index
 
