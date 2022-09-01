@@ -102,7 +102,8 @@ class VulnerabilityForm(Form):
                 }
             )
             template_data = select_template_form.process_form()
-            template = template_data["template"]
+            template_uuid = template_data["template"]
+            template = self._vuln_template_crud_handler.get(template_uuid)
             template_fields = template.__dataclass_fields__
 
             # copy data from template to form fields defaults
