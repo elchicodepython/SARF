@@ -17,17 +17,15 @@ class StorageOutput:
 
 
 class StorageUploader(ABC):
-
     @abstractmethod
     def upload(self, upload_context, content: bytes) -> StorageOutput:
         ...
 
 
 class StorageDownloader(ABC):
-
     @abstractmethod
     def download(self, path: str) -> bytes:
         ...
 
 
-Storage = StorageUploader # Alias for compatibility reasons
+Storage = StorageUploader  # Alias for compatibility reasons

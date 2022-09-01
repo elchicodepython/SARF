@@ -15,6 +15,7 @@ class Vulnerability:
     def __str__(self):
         return self.title
 
+
 @dataclass(frozen=True)
 class VulnerabilityTemplate:
     uuid: str

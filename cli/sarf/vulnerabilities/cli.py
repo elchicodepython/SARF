@@ -21,14 +21,7 @@ vuln_form_base_fields = {
     "tlp": {
         "name": "TLP",
         "type": "select",
-        "conf": {
-            "choices": [
-                "WHITE",
-                "GREEN",
-                "AMBER",
-                "RED"
-            ]
-        }
+        "conf": {"choices": ["WHITE", "GREEN", "AMBER", "RED"]},
     },
     "cvss": {
         "name": "CVSS",
@@ -51,27 +44,19 @@ vuln_form_fields = {
             "name": "Evidences",
             "type": "text",
         }
-    }
+    },
 }
 
 vuln_template_form_fields = {
     **vuln_form_base_fields,
     **{
-        "lang": {
-            "name": "Lang",
-            "type": "input",
-            "conf": {
-                "default": "en"
-            }
-        },
+        "lang": {"name": "Lang", "type": "input", "conf": {"default": "en"}},
         "author": {
             "name": "Author",
             "type": "input",
-            "conf": {
-                "default": "anonymous"
-            }
+            "conf": {"default": "anonymous"},
         },
-    }
+    },
 }
 
 
@@ -79,14 +64,15 @@ class VulnerabilityForm(Form):
     """Special form that populates itself with data retrived from
     a vulnerability template.
     """
-    def __init__(self,
-            vuln_crud_handler: SimpleCRUD[Vulnerability],
-            vuln_template_crud_handler: SimpleCRUD[VulnerabilityTemplate]
-        ):
+
+    def __init__(
+        self,
+        vuln_crud_handler: SimpleCRUD[Vulnerability],
+        vuln_template_crud_handler: SimpleCRUD[VulnerabilityTemplate],
+    ):
         super().__init__(cli_fields)
         self._vuln_crud_handler = vuln_crud_handler
         self._vuln_template_crud_handler = vuln_template_crud_handler
-
 
     def process_form(self):
 
@@ -94,13 +80,13 @@ class VulnerabilityForm(Form):
         use_template_form.set_fields(
             {
                 "use_template": {
-                    'type': 'boolean',
-                    'name': 'Use template?',
+                    "type": "boolean",
+                    "name": "Use template?",
                 }
             }
         )
 
-        if use_template_form.process_form()['use_template']:
+        if use_template_form.process_form()["use_template"]:
             select_template_form = Form(cli_fields)
             select_template_form.set_fields(
                 {
@@ -110,8 +96,8 @@ class VulnerabilityForm(Form):
                         "conf": {
                             "field": "title",
                             "crud": self._vuln_template_crud_handler,
-                            "value_attr": "uuid"
-                        }
+                            "value_attr": "uuid",
+                        },
                     }
                 }
             )
@@ -123,7 +109,9 @@ class VulnerabilityForm(Form):
             for field in vuln_form_fields:
                 if field in template_fields:
                     vuln_form_fields[field].setdefault("conf", {})
-                    vuln_form_fields[field]["conf"]["default"] = getattr(template, field)
+                    vuln_form_fields[field]["conf"]["default"] = getattr(
+                        template, field
+                    )
 
         vuln_form = Form(cli_fields)
         vuln_form.set_fields(vuln_form_fields)
@@ -132,22 +120,24 @@ class VulnerabilityForm(Form):
 
 class VulnerabilitiesCliController:
     @inject
-    def __init__(self,
-        vuln_crud_handler: SimpleCRUD[Vulnerability] = Provide[Container.vulnerabilities_crud],
-        vuln_template_crud_handler: SimpleCRUD[VulnerabilityTemplate] = Provide[Container.vuln_templates_crud],
-        ):
+    def __init__(
+        self,
+        vuln_crud_handler: SimpleCRUD[Vulnerability] = Provide[
+            Container.vulnerabilities_crud
+        ],
+        vuln_template_crud_handler: SimpleCRUD[
+            VulnerabilityTemplate
+        ] = Provide[Container.vuln_templates_crud],
+    ):
         self._vuln_crud_handler = vuln_crud_handler
         self._vuln_template_crud_handler = vuln_template_crud_handler
 
     def handle_request(self, args, stdin):
         form = VulnerabilityForm(
-            self._vuln_crud_handler,
-            self._vuln_template_crud_handler
+            self._vuln_crud_handler, self._vuln_template_crud_handler
         )
         cli_crud = CLIFormCrudOperations[Vulnerability](
-            Vulnerability,
-            self._vuln_crud_handler,
-            form
+            Vulnerability, self._vuln_crud_handler, form
         )
         if not handle_cli_crud(cli_crud, args):
             # handle not simple crud operations
@@ -156,9 +146,12 @@ class VulnerabilitiesCliController:
 
 class VulnerabilyTemplateCliController:
     @inject
-    def __init__(self,
-        crud_handler: SimpleCRUD[VulnerabilityTemplate] = Provide[Container.vuln_templates_crud],
-        ):
+    def __init__(
+        self,
+        crud_handler: SimpleCRUD[VulnerabilityTemplate] = Provide[
+            Container.vuln_templates_crud
+        ],
+    ):
         self._crud_handler = crud_handler
 
     def handle_request(self, args, stdin):

@@ -13,7 +13,7 @@ class UploadNotification:
                 "project_id": upload_output.context.project_id,
                 "tags": upload_output.context.tags,
                 "storage_type": upload_output.storage.storage_type,
-                "path": upload_output.storage.path
+                "path": upload_output.storage.path,
             }
         )
         self.__message_pub.stop_publishing()
