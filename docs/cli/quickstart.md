@@ -80,7 +80,6 @@ The folder `~/.sarf` should be created also. This is the folder
 where SARF will store the data files defined in the previous
 configuration.
 
-## Usage
 
 You are doing great! Lets achieve the next level together.
 
@@ -99,7 +98,7 @@ SARF~$ sarf
 Usage: sarf --help
 ```
 
-### Work with SARF Projects
+## Work with SARF Projects
 
 Projects are the main unit of a security assesment in SARF.
 
@@ -113,7 +112,7 @@ SARF~$ sarf --projects --addi
 [+] Saved with uuid 77d78b25-56ef-480f-8745-88e9a66b937c
 ```
 
-### Start a SARF Report (--reports)
+## Start a SARF Report
 
 ```bash
 SARF~$ sarf --reports --addi
@@ -134,7 +133,7 @@ SARF~$ sarf --reports --get-all
 [+] 22d5c89f-4e98-4847-844e-9c40a61c5dfe: 10/22 Periodic security assesment to elchicodepython.github.io
 ```
 
-### Add a vulnerability to a Report
+## Add a vulnerability to a Report
 
 ```bash
 SARF~$ sarf --vulns --addi
@@ -143,8 +142,7 @@ SARF~$ sarf --vulns --addi
 ...
 ```
 
-### Creating vulnerability templates
-
+## Creating vulnerability templates
 
 SARF can use `Vulnerability templates` to speed up the security assesment reporting
 process. `Vulnerability templates` can be created manually with the following command:
@@ -193,7 +191,7 @@ SARF CRUD objects can perform CRUD operations using the following flags:
 - `--delete <UUID>`
 
 
-### Add the output of a tool to SARF
+## Add the output of a tool to SARF
 
 The output of any console tool can be redirected to sarf. It doesn't matter if
 these are plain text or binary.
