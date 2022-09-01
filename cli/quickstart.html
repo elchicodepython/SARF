@@ -45,17 +45,12 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">CLI</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#configuration">Configuration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#usage">Usage</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#work-with-sarf-projects">Work with SARF Projects</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#start-a-sarf-report-reports">Start a SARF Report (–reports)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#add-a-vulnerability-to-a-report">Add a vulnerability to a Report</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#creating-vulnerability-templates">Creating vulnerability templates</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#sarf-crud-objects">SARF CRUD objects</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#add-the-output-of-a-tool-to-sarf">Add the output of a tool to SARF</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="#work-with-sarf-projects">Work with SARF Projects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#start-a-sarf-report">Start a SARF Report</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#add-a-vulnerability-to-a-report">Add a vulnerability to a Report</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#creating-vulnerability-templates">Creating vulnerability templates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sarf-crud-objects">SARF CRUD objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#add-the-output-of-a-tool-to-sarf">Add the output of a tool to SARF</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../core/messages.html">CORE | Messages</a></li>
@@ -167,9 +162,6 @@ following content.</p>
 <p>The folder <code class="docutils literal notranslate"><span class="pre">~/.sarf</span></code> should be created also. This is the folder
 where SARF will store the data files defined in the previous
 configuration.</p>
-</div>
-<div class="section" id="usage">
-<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
 <p>You are doing great! Lets achieve the next level together.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>SARF~$ sarf
 
@@ -185,8 +177,9 @@ configuration.</p>
 Usage: sarf --help
 </pre></div>
 </div>
+</div>
 <div class="section" id="work-with-sarf-projects">
-<h3>Work with SARF Projects<a class="headerlink" href="#work-with-sarf-projects" title="Permalink to this headline">¶</a></h3>
+<h2>Work with SARF Projects<a class="headerlink" href="#work-with-sarf-projects" title="Permalink to this headline">¶</a></h2>
 <p>Projects are the main unit of a security assesment in SARF.</p>
 <p>An app could have multiple penetration tests.
 Each penetration test must be associated with a report.
@@ -197,8 +190,8 @@ All the related reports for the same asset should belong to the same project.</p
 </pre></div>
 </div>
 </div>
-<div class="section" id="start-a-sarf-report-reports">
-<h3>Start a SARF Report (–reports)<a class="headerlink" href="#start-a-sarf-report-reports" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="start-a-sarf-report">
+<h2>Start a SARF Report<a class="headerlink" href="#start-a-sarf-report" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>SARF~$ sarf --reports --addi
 In the next step you are going to search <span class="k">for</span> a Project
 name to search:
@@ -217,7 +210,7 @@ with the flag <code class="docutils literal notranslate"><span class="pre">--get
 </div>
 </div>
 <div class="section" id="add-a-vulnerability-to-a-report">
-<h3>Add a vulnerability to a Report<a class="headerlink" href="#add-a-vulnerability-to-a-report" title="Permalink to this headline">¶</a></h3>
+<h2>Add a vulnerability to a Report<a class="headerlink" href="#add-a-vulnerability-to-a-report" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>SARF~$ sarf --vulns --addi
 ? Use template?  No
 ? Title
@@ -226,7 +219,7 @@ with the flag <code class="docutils literal notranslate"><span class="pre">--get
 </div>
 </div>
 <div class="section" id="creating-vulnerability-templates">
-<h3>Creating vulnerability templates<a class="headerlink" href="#creating-vulnerability-templates" title="Permalink to this headline">¶</a></h3>
+<h2>Creating vulnerability templates<a class="headerlink" href="#creating-vulnerability-templates" title="Permalink to this headline">¶</a></h2>
 <p>SARF can use <code class="docutils literal notranslate"><span class="pre">Vulnerability</span> <span class="pre">templates</span></code> to speed up the security assesment reporting
 process. <code class="docutils literal notranslate"><span class="pre">Vulnerability</span> <span class="pre">templates</span></code> can be created manually with the following command:
 <code class="docutils literal notranslate"><span class="pre">sarf</span> <span class="pre">--vuln-templates</span> <span class="pre">addi</span></code>. After creating a Vulnerability template they can be selected
@@ -255,7 +248,6 @@ workflow.</strong></p>
 It will be available in 0.4.</p>
 </div></blockquote>
 </div>
-</div>
 <div class="section" id="sarf-crud-objects">
 <h2>SARF CRUD objects<a class="headerlink" href="#sarf-crud-objects" title="Permalink to this headline">¶</a></h2>
 <p>SARF <code class="docutils literal notranslate"><span class="pre">crud</span> <span class="pre">objects</span></code> are:</p>
@@ -273,8 +265,9 @@ It will be available in 0.4.</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">--add</span> <span class="pre">&lt;UUID&gt;</span> <span class="pre">field1:value1;field2:value2</span></code> Only recommended for scripting.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--delete</span> <span class="pre">&lt;UUID&gt;</span></code></p></li>
 </ul>
+</div>
 <div class="section" id="add-the-output-of-a-tool-to-sarf">
-<h3>Add the output of a tool to SARF<a class="headerlink" href="#add-the-output-of-a-tool-to-sarf" title="Permalink to this headline">¶</a></h3>
+<h2>Add the output of a tool to SARF<a class="headerlink" href="#add-the-output-of-a-tool-to-sarf" title="Permalink to this headline">¶</a></h2>
 <p>The output of any console tool can be redirected to sarf. It doesn’t matter if
 these are plain text or binary.</p>
 <p>This version of <code class="docutils literal notranslate"><span class="pre">SARF</span></code> works with a <code class="docutils literal notranslate"><span class="pre">FTP</span></code> Server as a storage backend
@@ -296,7 +289,6 @@ very useful to interconnect with other tools.</p>
 <p>The received data must be associated with a report.
 The chosen report will be obtained from the environment variable SARF_REPORT.
 The chosen report can also be provided explicitly with the <code class="docutils literal notranslate"><span class="pre">--report</span></code> flag.</p>
-</div>
 </div>
 </div>
 
