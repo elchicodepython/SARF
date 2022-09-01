@@ -43,12 +43,16 @@
 <li class="toctree-l1"><a class="reference internal" href="../common/roadmap_2022.html">SARF Roadmap</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../common/needs.html">Detected needs</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">CLI</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#running-a-custom-ftp-server-as-a-tools-storage-backend">Running a custom FTP Server as a tools storage backend</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#configuration">Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#usage">Usage</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#work-with-sarf-projects">Work with SARF Projects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#start-a-sarf-report-reports">Start a SARF Report (–reports)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#add-a-vulnerability-to-a-report">Add a vulnerability to a Report</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#creating-vulnerability-templates">Creating vulnerability templates</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#sarf-crud-objects">SARF CRUD objects</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#add-the-output-of-a-tool-to-sarf">Add the output of a tool to SARF</a></li>
 </ul>
 </li>
@@ -90,31 +94,25 @@
 <div class="section" id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">sarf</span></code></p>
-<p>This version of <code class="docutils literal notranslate"><span class="pre">SARF</span></code> works with a <code class="docutils literal notranslate"><span class="pre">FTP</span></code> Server as a storage backend
-and a <code class="docutils literal notranslate"><span class="pre">rabbitmq</span></code> as a pubsub.</p>
-<div class="section" id="running-a-custom-ftp-server-as-a-tools-storage-backend">
-<h3>Running a custom FTP Server as a tools storage backend<a class="headerlink" href="#running-a-custom-ftp-server-as-a-tools-storage-backend" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker run -d <span class="se">\</span>
-    -p <span class="m">21</span>:21 <span class="se">\</span>
-    -p <span class="m">21000</span>-21010:21000-21010 <span class="se">\</span>
-    -e <span class="nv">USERS</span><span class="o">=</span><span class="s2">&quot;sarf|sarf&quot;</span> <span class="se">\</span>
-    --name <span class="s2">&quot;sarf_ftp&quot;</span> <span class="se">\</span>
-    delfer/alpine-ftp-server
-</pre></div>
-</div>
-</div>
 </div>
 <div class="section" id="configuration">
 <h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
 <p>Before continuing check you can access to the rabbitmq and the FTP.</p>
 <p>Once all the components are installed we can write SARF configuration file
-in /etc/sarf/config.yml. If this file does not exist, create it.</p>
+in /etc/sarf/config.yml. If this file does not exist, create it with the
+following content.</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">messages</span><span class="p">:</span>
   <span class="c1"># Name to be sent in messages as the emitter</span>
   <span class="c1"># of the actions made with this instance</span>
   <span class="nt">emitter</span><span class="p">:</span> <span class="s">&quot;ethical</span><span class="nv"> </span><span class="s">hacker</span><span class="nv"> </span><span class="s">email</span><span class="nv"> </span><span class="s">or</span><span class="nv"> </span><span class="s">identifier&quot;</span>
 
   <span class="nt">tools</span><span class="p">:</span>
+    <span class="nt">pub</span><span class="p">:</span>
+      <span class="nt">type</span><span class="p">:</span> <span class="s">&quot;rabbitmq&quot;</span>
+      <span class="nt">connection_string</span><span class="p">:</span> <span class="s">&quot;&quot;</span>
+      <span class="nt">queue</span><span class="p">:</span> <span class="s">&quot;tools&quot;</span>
+
+  <span class="nt">reports</span><span class="p">:</span>
     <span class="nt">pub</span><span class="p">:</span>
       <span class="nt">type</span><span class="p">:</span> <span class="s">&quot;rabbitmq&quot;</span>
       <span class="nt">connection_string</span><span class="p">:</span> <span class="s">&quot;&quot;</span>
@@ -128,28 +126,176 @@ in /etc/sarf/config.yml. If this file does not exist, create it.</p>
         <span class="nt">user</span><span class="p">:</span> <span class="s">&quot;sarf&quot;</span>
         <span class="nt">password</span><span class="p">:</span> <span class="s">&quot;sarf&quot;</span>
         <span class="nt">host</span><span class="p">:</span> <span class="s">&quot;127.0.0.1&quot;</span>
-        <span class="nt">basedir</span><span class="p">:</span> <span class="s">&quot;/ftp/sarf&quot;</span>
+        <span class="nt">basedir</span><span class="p">:</span> <span class="s">&quot;/ftp/sarf/tools&quot;</span>
+
+  <span class="nt">reports</span><span class="p">:</span>
+    <span class="nt">upload</span><span class="p">:</span>
+      <span class="nt">type</span><span class="p">:</span> <span class="s">&quot;ftp&quot;</span>
+      <span class="nt">conf</span><span class="p">:</span>
+        <span class="nt">user</span><span class="p">:</span> <span class="s">&quot;sarf&quot;</span>
+        <span class="nt">password</span><span class="p">:</span> <span class="s">&quot;sarf&quot;</span>
+        <span class="nt">host</span><span class="p">:</span> <span class="s">&quot;127.0.0.1&quot;</span>
+        <span class="nt">basedir</span><span class="p">:</span> <span class="s">&quot;/ftp/sarf/reports&quot;</span>
+
+<span class="nt">crud</span><span class="p">:</span>
+  <span class="nt">companies</span><span class="p">:</span>
+    <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">json</span>
+    <span class="nt">conf</span><span class="p">:</span>
+      <span class="nt">filename</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">~/.sarf/data/companies.json</span>
+
+  <span class="nt">projects</span><span class="p">:</span>
+    <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">json</span>
+    <span class="nt">conf</span><span class="p">:</span>
+      <span class="nt">filename</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">~/.sarf/data/projects.json</span>
+
+  <span class="nt">reports</span><span class="p">:</span>
+    <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">json</span>
+    <span class="nt">conf</span><span class="p">:</span>
+      <span class="nt">filename</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">~/.sarf/data/reports.json</span>
+
+  <span class="nt">vulnerabilities</span><span class="p">:</span>
+    <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">json</span>
+    <span class="nt">conf</span><span class="p">:</span>
+      <span class="nt">filename</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">~/.sarf/data/vulnerabilities.json</span>
+
+  <span class="nt">vuln_templates</span><span class="p">:</span>
+    <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">json</span>
+    <span class="nt">conf</span><span class="p">:</span>
+      <span class="nt">filename</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">~/.sarf/data/vuln_templates.json</span>
 </pre></div>
 </div>
+<p>The folder <code class="docutils literal notranslate"><span class="pre">~/.sarf</span></code> should be created also. This is the folder
+where SARF will store the data files defined in the previous
+configuration.</p>
 </div>
 <div class="section" id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<p>You are doing great! Lets achieve the next level together.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>SARF~$ sarf
+
+   ____    _    ____  _____
+  / ___|  / \  |  _ \|  ___|
+  \___ \ / _ \ | |_) | |_
+   ___) / ___ \|  _ &lt;|  _|
+  |____/_/   \_\_| \_\_|
+
+  Welcome to SARF - XXXXXX edition
+  The Security Assesment and Reporting Framework.
+
+Usage: sarf --help
+</pre></div>
+</div>
+<div class="section" id="work-with-sarf-projects">
+<h3>Work with SARF Projects<a class="headerlink" href="#work-with-sarf-projects" title="Permalink to this headline">¶</a></h3>
+<p>Projects are the main unit of a security assesment in SARF.</p>
+<p>An app could have multiple penetration tests.
+Each penetration test must be associated with a report.
+All the related reports for the same asset should belong to the same project.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>SARF~$ sarf --projects --addi
+<span class="o">[</span>+<span class="o">]</span> name: Web elchicodepython.github.io
+<span class="o">[</span>+<span class="o">]</span> Saved with uuid 77d78b25-56ef-480f-8745-88e9a66b937c
+</pre></div>
+</div>
+</div>
+<div class="section" id="start-a-sarf-report-reports">
+<h3>Start a SARF Report (–reports)<a class="headerlink" href="#start-a-sarf-report-reports" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>SARF~$ sarf --reports --addi
+In the next step you are going to search <span class="k">for</span> a Project
+name to search:
+Found <span class="m">1</span> items. Continue? <span class="o">[</span>Y<span class="o">]</span>:
+? Project  elchicodepython.github.io
+? Report name  <span class="m">11</span>/22 Periodic security assesment to elchicodepython.github.io
+<span class="o">[</span>+<span class="o">]</span> Saved with uuid dc1687ce-65ab-4946-ad59-9c27d427a4b5
+</pre></div>
+</div>
+<p>After creating a <code class="docutils literal notranslate"><span class="pre">Report</span></code> you can list all the existing reports
+with the flag <code class="docutils literal notranslate"><span class="pre">--get-all</span></code>. This flag also works with all the sarf <code class="docutils literal notranslate"><span class="pre">CRUD</span> <span class="pre">objects</span></code>, more on this later.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>SARF~$ sarf --reports --get-all
+<span class="o">[</span>+<span class="o">]</span> dc1687ce-65ab-4946-ad59-9c27d427a4b5: <span class="m">11</span>/22 Periodic security assesment to elchicodepython.github.io
+<span class="o">[</span>+<span class="o">]</span> 22d5c89f-4e98-4847-844e-9c40a61c5dfe: <span class="m">10</span>/22 Periodic security assesment to elchicodepython.github.io
+</pre></div>
+</div>
+</div>
+<div class="section" id="add-a-vulnerability-to-a-report">
+<h3>Add a vulnerability to a Report<a class="headerlink" href="#add-a-vulnerability-to-a-report" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>SARF~$ sarf --vulns --addi
+? Use template?  No
+? Title
+...
+</pre></div>
+</div>
+</div>
+<div class="section" id="creating-vulnerability-templates">
+<h3>Creating vulnerability templates<a class="headerlink" href="#creating-vulnerability-templates" title="Permalink to this headline">¶</a></h3>
+<p>SARF can use <code class="docutils literal notranslate"><span class="pre">Vulnerability</span> <span class="pre">templates</span></code> to speed up the security assesment reporting
+process. <code class="docutils literal notranslate"><span class="pre">Vulnerability</span> <span class="pre">templates</span></code> can be created manually with the following command:
+<code class="docutils literal notranslate"><span class="pre">sarf</span> <span class="pre">--vuln-templates</span> <span class="pre">addi</span></code>. After creating a Vulnerability template they can be selected
+to fill some defaults for the vulnerability fields like the title, description and references.</p>
+<p>Vulnerability templates can also be imported with a script from a third party.</p>
+<p><strong>Importing Vulnerability templates from vuln_repo</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">tmp</span>
+<span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">elchicodepython</span><span class="o">/</span><span class="n">SARF</span><span class="o">-</span><span class="n">Security</span><span class="o">-</span><span class="n">Assesment</span><span class="o">-</span><span class="ow">and</span><span class="o">-</span><span class="n">Reporting</span><span class="o">-</span><span class="n">Framework</span>
+<span class="n">cd</span> <span class="n">SARF</span><span class="o">-</span><span class="n">Security</span><span class="o">-</span><span class="n">Assesment</span><span class="o">-</span><span class="ow">and</span><span class="o">-</span><span class="n">Reporting</span><span class="o">-</span><span class="n">Framework</span><span class="o">/</span><span class="n">vendors</span><span class="o">/</span><span class="n">templates</span><span class="o">/</span><span class="n">vuln_repo</span><span class="o">/</span>
+<span class="o">./</span><span class="n">download_templates</span><span class="o">.</span><span class="n">sh</span>
+<span class="n">python</span> <span class="n">import_templates</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<p>You may see the following output after importing the templates.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>SARF~$ python import_templates.py
+Importing [XSS] Stored cross-site scripting
+Importing [XSS] Reflected cross-site scripting
+...
+</pre></div>
+</div>
+<p>After importing the templates you will have the capability to select a
+template when writting a vulnerability. <strong>This will speed-up your reporting
+workflow.</strong></p>
+<blockquote>
+<div><p>Take into account that SARF reporting engine is not ready yet.
+It will be available in 0.4.</p>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="sarf-crud-objects">
+<h2>SARF CRUD objects<a class="headerlink" href="#sarf-crud-objects" title="Permalink to this headline">¶</a></h2>
+<p>SARF <code class="docutils literal notranslate"><span class="pre">crud</span> <span class="pre">objects</span></code> are:</p>
+<ul class="simple">
+<li><p>projects <code class="docutils literal notranslate"><span class="pre">--projects</span></code></p></li>
+<li><p>reports  <code class="docutils literal notranslate"><span class="pre">--reports</span></code></p></li>
+<li><p>vulnerabilities <code class="docutils literal notranslate"><span class="pre">--vulns</span></code></p></li>
+<li><p>vulnerability templates <code class="docutils literal notranslate"><span class="pre">--vuln-templates</span></code></p></li>
+</ul>
+<p>SARF CRUD objects can perform CRUD operations using the following flags:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--get</span> <span class="pre">&lt;UUID&gt;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--get-all</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--addi</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--add</span> <span class="pre">&lt;UUID&gt;</span> <span class="pre">field1:value1;field2:value2</span></code> Only recommended for scripting.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--delete</span> <span class="pre">&lt;UUID&gt;</span></code></p></li>
+</ul>
 <div class="section" id="add-the-output-of-a-tool-to-sarf">
 <h3>Add the output of a tool to SARF<a class="headerlink" href="#add-the-output-of-a-tool-to-sarf" title="Permalink to this headline">¶</a></h3>
 <p>The output of any console tool can be redirected to sarf. It doesn’t matter if
-these are in plain text or binary.
-In order for sarf to prepare to receive the output of a tool, the <code class="docutils literal notranslate"><span class="pre">--ingest</span></code>
+these are plain text or binary.</p>
+<p>This version of <code class="docutils literal notranslate"><span class="pre">SARF</span></code> works with a <code class="docutils literal notranslate"><span class="pre">FTP</span></code> Server as a storage backend
+and a <code class="docutils literal notranslate"><span class="pre">rabbitmq</span></code> as a pubsub.</p>
+<p>You can run a custom FTP tools backend on docker using the following command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker run -d <span class="se">\</span>
+    -p <span class="m">21</span>:21 <span class="se">\</span>
+    -p <span class="m">21000</span>-21010:21000-21010 <span class="se">\</span>
+    -e <span class="nv">USERS</span><span class="o">=</span><span class="s2">&quot;sarf|sarf&quot;</span> <span class="se">\</span>
+    --name <span class="s2">&quot;sarf_ftp&quot;</span> <span class="se">\</span>
+    delfer/alpine-ftp-server
+</pre></div>
+</div>
+<p>In order for sarf to prepare to receive the output of a tool, the <code class="docutils literal notranslate"><span class="pre">--ingest</span></code>
 flag must be added to it.</p>
-<p><code class="docutils literal notranslate"><span class="pre">nmap</span> <span class="pre">192.168.1.0/24</span> <span class="pre">|</span> <span class="pre">sarf</span> <span class="pre">--ingest</span> <span class="pre">--tags</span> <span class="pre">nmap,network:192.168.1.0</span> <span class="pre">--report</span> <span class="pre">lbk</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">nmap</span> <span class="pre">192.168.1.0/24</span> <span class="pre">|</span> <span class="pre">sarf</span> <span class="pre">--ingest</span> <span class="pre">--tags</span> <span class="pre">nmap,network:192.168.1.0</span> <span class="pre">--report</span> <span class="pre">98aa3c7e-5e15-4b6a-a009-83be6d2597ff</span></code></p>
 <p><code class="docutils literal notranslate"><span class="pre">--tags</span></code> flag is optional. It adds tags to the received data that can be
 very useful to interconnect with other tools.</p>
 <p>The received data must be associated with a report.
 The chosen report will be obtained from the environment variable SARF_REPORT.
 The chosen report can also be provided explicitly with the <code class="docutils literal notranslate"><span class="pre">--report</span></code> flag.</p>
-<blockquote>
-<div><p>This is all for now. SARF is at a very early stage of its development.
-Give it a star on <a class="reference external" href="https://github.com/elchicodepython/SARF-Security-Assesment-and-Reporting-Framework">github</a> to find out all its progress.</p>
-</div></blockquote>
 </div>
 </div>
 </div>
