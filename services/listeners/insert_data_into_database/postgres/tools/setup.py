@@ -17,6 +17,7 @@ setup(
    description='This module allows you to save SARF tools messages into postgresql',
    install_requires=[
        "sarf_listener",
+       "awesome_messages",
        "psycopg2-binary>=2.0.0"
    ],
    entry_points = {
