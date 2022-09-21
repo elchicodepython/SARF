@@ -4,7 +4,7 @@ from awesome_messages.domain.listener import MessageListener
 from awesome_messages.infra.rabbitmq.listener import RabbitMessageListener
 from sarf.containers import Container as MainContainer
 
-from sarf.sarf_uploader.storages.ftp import FTPStorage
+from sarf.storages.infra.ftp import FTPStorage
 
 
 class ListenerContainer(containers.DeclarativeContainer):

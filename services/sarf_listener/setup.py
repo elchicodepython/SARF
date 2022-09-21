@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
    name='sarf_listener',
-   version='0.1.0',
+   version='1.0.0',
    author='Samuel López Saura',
    author_email='samuellopezsaura@gmail.com',
    packages=find_packages(),
@@ -16,6 +16,6 @@ setup(
    ],
    description='Dependency required by sarf listeners',
    install_requires=[
-       "sarf",
+       "sarf>=0.3.0,<1.0",
    ],
 )
