@@ -16,7 +16,7 @@ class ListenerContainer(containers.DeclarativeContainer):
     )
 
     # Messages Objects
-    rabbit_listener: MessageListener = providers.Singleton(
+    messages_tools_rabbit_listener: MessageListener = providers.Singleton(
         RabbitMessageListener,
         connection_string=config.messages.tools.sub.connection_string,
         queue=config.messages.tools.sub.queue,
@@ -24,7 +24,19 @@ class ListenerContainer(containers.DeclarativeContainer):
 
     messages_tools_subscriber: MessageListener = providers.Selector(
         config.messages.tools.sub.type,
-        rabbitmq=rabbit_listener,
+        rabbitmq=messages_tools_rabbit_listener,
+    )
+
+    # Reports Objects
+    reports_tools_rabbit_listener: MessageListener = providers.Singleton(
+        RabbitMessageListener,
+        connection_string=config.messages.reports.sub.connection_string,
+        queue=config.messages.reports.sub.queue,
+    )
+
+    messages_reports_subscriber: MessageListener = providers.Selector(
+        config.messages.reports.sub.type,
+        rabbitmq=reports_tools_rabbit_listener,
     )
 
     # Storage objects
