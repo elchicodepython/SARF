@@ -1,4 +1,4 @@
 sphinx
-sphinx-rtd-theme
+piccolo-theme
 sphinxcontrib-mermaid
 myst-parser
