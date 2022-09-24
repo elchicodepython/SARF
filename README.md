@@ -17,7 +17,7 @@ When I was working as an ethical hacker I began to notice a series of needs in
 my day to day that this platform tries to solve.
 
 - ![](https://geps.dev/progress/100) Need for custom vulnerability templates
-- ![](https://geps.dev/progress/20) Need for report templates and automatic report generation
+- ![](https://geps.dev/progress/40) Need for report templates and automatic report generation
 - ![](https://geps.dev/progress/5) Need for security assesment traceability
 - ![](https://geps.dev/progress/70) Need for tools interconnection
 
