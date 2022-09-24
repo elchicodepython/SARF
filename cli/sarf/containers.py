@@ -4,6 +4,7 @@ from awesome_messages.infra.rabbitmq.publisher import RabbitMessagePublisher
 
 from .notifications.notification import UploadNotification
 from .storages.infra.ftp import FTPStorage
+from .storages.infra.dummy import DummyStorage
 from .shared.crud.simple_crud import SimpleCRUD
 from .shared.crud.dal.infra.json_dal import JSONDatabase
 from .reports.base import Report
@@ -44,6 +45,10 @@ class Container(containers.DeclarativeContainer):
 
     # -- Storage objects --
 
+    dummy_storage = providers.Singleton(
+        DummyStorage
+    )
+
     # Tools Storage
     tools_ftp_upload_storage = providers.Singleton(
         FTPStorage,
@@ -55,7 +60,8 @@ class Container(containers.DeclarativeContainer):
 
     tools_upload_storage_service = providers.Selector(
         config.storage_backend.tools.upload.type,
-        ftp=tools_ftp_upload_storage
+        ftp=tools_ftp_upload_storage,
+        dummy=dummy_storage
     )
 
     # Reports Storage
@@ -69,7 +75,8 @@ class Container(containers.DeclarativeContainer):
 
     reports_upload_storage_service = providers.Selector(
         config.storage_backend.reports.upload.type,
-        ftp=reports_ftp_upload_storage
+        ftp=reports_ftp_upload_storage,
+        dummy=dummy_storage
     )
 
     tools_notification_service = providers.Singleton(
