@@ -1,16 +1,16 @@
 {
 	"type": "module",
 	"dependencies": {
-    "docx-templates": "^4.9.2"
-  },
-  "name": "report",
-  "version": "1.0.0",
-  "main": "sample.js",
-  "devDependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
-  "description": ""
+		"docx-templates": "^4.9.2",
+		"zeromq": "^5.2.8"
+	},
+	"name": "sarf_docx_report_engine",
+	"version": "1.0.0",
+	"main": "report_engine.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"author": "Samuel López Saura",
+	"license": "ISC",
+	"description": "A report engine that generates reports using docx_reports js library"
 }
