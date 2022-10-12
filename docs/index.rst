@@ -20,6 +20,7 @@ my day to day that this platform tries to solve.
    core/messages
    core/tags
    listeners/database
+   listeners/misc
    listeners/development
    common/events
 
