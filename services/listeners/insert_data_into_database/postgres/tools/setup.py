@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
    name='sarf_postgres_tools',
-   version='0.1.0',
+   version='1.0.0',
    author='Samuel López Saura',
    author_email='samuellopezsaura@gmail.com',
    packages=find_packages(),
@@ -16,7 +16,7 @@ setup(
    ],
    description='This module allows you to save SARF tools messages into postgresql',
    install_requires=[
-       "sarf_listener",
+       "sarf_listener>=0.4",
        "awesome_messages",
        "psycopg2-binary>=2.0.0"
    ],

@@ -34,7 +34,7 @@ listeners:
       emitter: emitter
       storage_type: storage_type
       path: path
-      project_id: project_id
+      report_id: report_id
 
 ```
 
