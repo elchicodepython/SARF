@@ -41,7 +41,7 @@ https://github.com/elchicodepython/SARF-Security-Assesment-and-Reporting-Framewo
 @inject
 def publish_tool_output(
     tool_data: bytes,
-    project_id: str,
+    report_id: str,
     tags: List[str],
     stdout: bool = False,
     tools_storage: Storage=Provide[Container.tools_upload_storage_service],
@@ -52,7 +52,7 @@ def publish_tool_output(
         tool_data,
         UploadContext(
             emitter,
-            project_id,
+            report_id,
             tags
         ),
         tools_storage,
@@ -65,7 +65,7 @@ def publish_tool_output(
 @inject
 def publish_report_output(
     tool_data: bytes,
-    project_id: str,
+    report_id: str,
     tags: List[str],
     tools_storage: Storage=Provide[Container.reports_upload_storage_service],
     upload_notification: UploadNotification=Provide[Container.messages_reports_publisher],
@@ -75,15 +75,15 @@ def publish_report_output(
         tool_data,
         UploadContext(
             emitter,
-            project_id,
+            report_id,
             tags
         ),
         tools_storage,
         upload_notification
     )
 
-def get_project_id() -> Optional[str]:
-    return environ.get("SARF_PROJECT")
+def get_report_id() -> Optional[str]:
+    return environ.get("SARF_REPORT")
 
 
 def parse_args():
@@ -98,8 +98,8 @@ def parse_args():
         help="Path of the file to be uploaded"
     )
     parser.add_argument(
-        "--project",
-        help="Related project ID. If not provided will be gathered from SARF_PROJECT env var"
+        "--report",
+        help="Related report ID. If not provided will be gathered from SARF_REPORT env var"
     )
     parser.add_argument(
         "--tags",
@@ -158,7 +158,7 @@ def main():
 
     args = parse_args()
 
-    project_id = args.project or get_project_id()
+    report_id = args.report or get_report_id()
 
     tags = []
     if args.tags:
@@ -178,8 +178,8 @@ def main():
                     print("File not found")
                     errors = True
 
-        if not project_id:
-            print("Project ID should be provied with --project param or with SARF_PROJECT env var")
+        if not report_id:
+            print("Report ID should be provied with --report param or with SARF_REPORT env var")
             errors = True
 
         if errors:
@@ -188,9 +188,9 @@ def main():
             if args.upload_report:
                 if args.report_engine:
                     tags.append(f'engine:{args.report_engine}')
-                publish_report_output(data, project_id, tags)
+                publish_report_output(data, report_id, tags)
             else:
-                publish_tool_output(data, project_id, tags, args.stdout)
+                publish_tool_output(data, report_id, tags, args.stdout)
         except dependency_injector.errors.Error:
             print(
                 "Error during dependency injection. Check configuration file")

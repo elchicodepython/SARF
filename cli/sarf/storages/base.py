@@ -6,7 +6,7 @@ from typing import List
 @dataclass(frozen=True)
 class UploadContext:
     emitter: str
-    project_id: str
+    report_id: str
     tags: List[str]
 
 

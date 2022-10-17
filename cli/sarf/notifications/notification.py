@@ -10,7 +10,7 @@ class UploadNotification:
         self.__message_pub.publish(
             {
                 "emitter": upload_output.context.emitter,
-                "project_id": upload_output.context.project_id,
+                "report_id": upload_output.context.report_id,
                 "tags": upload_output.context.tags,
                 "storage_type": upload_output.storage.storage_type,
                 "path": upload_output.storage.path,
