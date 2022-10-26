@@ -87,7 +87,16 @@ def get_report_id() -> Optional[str]:
 
 
 def parse_args():
+
+    def add_crud_to_parser(parser):
+        parser.add_argument("--get", action="store", help="Retrieve a record")
+        parser.add_argument("--add", action="store", help="Add a record. Checkout syntax in sarf docs")
+        parser.add_argument('--addi', action="store_true", help="Add a record in a interactive way")
+        parser.add_argument("--delete", action="store", help="Delete a record")
+        parser.add_argument('--get-all', action="store_true", help="List all the records. WARNING: They can be a lot.")
+
     parser = argparse.ArgumentParser(description="SARF | Security Assesment and Reporting Framework")
+    subparsers = parser.add_subparsers(dest='main_command')
     parser.add_argument(
         "--ingest",
         action="store_true",
@@ -116,21 +125,25 @@ def parse_args():
         action="store_true",
         help="Upload a report to SARF. This flag can be used by third party apps to use SARF uploading configured capabilities"
     )
-    parser.add_argument(
+
+    reports_parser = subparsers.add_parser('reports')
+    reports_parser.add_argument('--generate-report', action='store_true', help='Create a report')
+    reports_parser.add_argument(
         "--report-engine",
-        help="Name of the report engine"
+        help="Name of the report engine",
+        choices=["js-docx"],
+        default="js-docx"
     )
+    add_crud_to_parser(reports_parser)
 
-    parser.add_argument("--projects", action="store_true")
-    parser.add_argument("--vulns", action="store_true")
-    parser.add_argument("--vuln-templates", action="store_true")
-    parser.add_argument("--reports", action="store_true")
+    projects_parser = subparsers.add_parser('projects')
+    add_crud_to_parser(projects_parser)
 
-    parser.add_argument("--get", action="store", help="Retrieve a record")
-    parser.add_argument("--add", action="store", help="Add a record. Checkout syntax in sarf docs")
-    parser.add_argument('--addi', action="store_true", help="Add a record in a interactive way")
-    parser.add_argument("--delete", action="store", help="Delete a record")
-    parser.add_argument('--get-all', action="store_true", help="List all the records. WARNING: They can be a lot.")
+    vulns_parser = subparsers.add_parser('vulns')
+    add_crud_to_parser(vulns_parser)
+
+    vuln_templates_parser = subparsers.add_parser('vuln_templates')
+    add_crud_to_parser(vuln_templates_parser)
 
     return parser.parse_args()
 
@@ -143,6 +156,16 @@ def get_bdata_from_filename(filename: str) -> bytes:
         data = f.read()
     return data
 
+@inject
+def get_cli_controllers():
+    return {
+    "projects": ProjectsCliController(),
+    "reports": ReportsCliController(),
+    "vulns": VulnerabilitiesCliController(),
+    "vuln_templates": VulnerabilyTemplateCliController()
+    }
+
+
 def main():
     container = Container()
     container.wire(modules=[
@@ -150,7 +173,8 @@ def main():
         'sarf.projects.cli',
         'sarf.vulnerabilities.cli',
         'sarf.projects.cli',
-        'sarf.reports.cli'])
+        'sarf.reports.cli',
+        ])
 
     data = None
     if not sys.stdin.isatty():
@@ -196,14 +220,8 @@ def main():
                 "Error during dependency injection. Check configuration file")
             print("Configuration file should exist in /etc/sarf/config.yml")
             sys.exit(2)
-    elif args.projects:
-        ProjectsCliController().handle_request(args, data)
-    elif args.vulns:
-        VulnerabilitiesCliController().handle_request(args, data)
-    elif args.vuln_templates:
-        VulnerabilyTemplateCliController().handle_request(args, data)
-    elif args.reports:
-        ReportsCliController().handle_request(args, data)
+    elif cli_controller := get_cli_controllers().get(args.main_command):
+        cli_controller.handle_request(args, data)
     else:
         print(welcome_text)
         print("Usage: sarf --help")
