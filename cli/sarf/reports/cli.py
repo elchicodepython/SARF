@@ -5,7 +5,6 @@ from .base import Report
 from ..shared.cli.crud import (
     CLIFormCrudOperations,
     handle_cli_crud,
-    CLICrudOperations,
 )
 from ..shared.crud.simple_crud import SimpleCRUD
 from ..shared.cli.forms.form import cli_fields
