@@ -16,6 +16,10 @@ class DALHandler(ABC):
         pass
 
     @abstractmethod
+    def where(self, conditions: Iterable[dict]) -> Iterable[dict]:
+        pass
+
+    @abstractmethod
     def add(self, item: dict) -> dict:
         pass
 

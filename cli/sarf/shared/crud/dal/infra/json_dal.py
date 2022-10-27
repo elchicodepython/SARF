@@ -6,6 +6,7 @@ from ..base import DALHandler
 
 class JSONDatabase(DALHandler):
     """Manages a JSON file like a database"""
+
     def __init__(self, filename: str):
         self.__filename = filename
         try:
@@ -20,17 +21,32 @@ class JSONDatabase(DALHandler):
     def get_all(self) -> Iterable[dict]:
         return self.__data.values()
 
-    def contains(
-        self,
-        field: str,
-        value: str
-        ) -> Iterable[dict]:
-        return [row for row in self.get_all() if value.lower() in row[field].lower()]
+    # TODO: Refactor this
+    def where(self, conditions: Iterable[dict]) -> Iterable[dict]:
+        for row in self.__data.values():
+            for condition in conditions:
+                if (
+                    condition["op"] == "="
+                    and row[condition["field"]] == condition["value"]
+                ):
+                    yield row
+                elif (
+                    condition["op"] == "in"
+                    and row[condition["field"]] in condition["value"]
+                ):
+                    yield row
+
+    def contains(self, field: str, value: str) -> Iterable[dict]:
+        return [
+            row
+            for row in self.get_all()
+            if value.lower() in row[field].lower()
+        ]
 
     def add(self, item: dict) -> dict:
-        if item['uuid'] in self.__data:
+        if item["uuid"] in self.__data:
             raise Exception("Identifier already exist")
-        self.__data[item['uuid']] = item
+        self.__data[item["uuid"]] = item
         return item
 
     def delete(self, uuid: str):
