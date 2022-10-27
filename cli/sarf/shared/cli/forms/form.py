@@ -1,4 +1,10 @@
-from .fields import BooleanField, InputField, TextField, SelectField, ForeignSelectField
+from .fields import (
+    BooleanField,
+    InputField,
+    TextField,
+    SelectField,
+    ForeignSelectField,
+)
 from ...forms.form import Form, FieldsRegistry
 
 

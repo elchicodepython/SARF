@@ -16,38 +16,34 @@ class Container(containers.DeclarativeContainer):
 
     config = providers.Configuration(
         yaml_files=["sarf_config.yml", "/etc/sarf/config.yml"]
-        )
+    )
 
     # -- Messages --
     # Tools Messages
     tools_rabbit_publisher: MessagePublisher = providers.Singleton(
         RabbitMessagePublisher,
         connection_string=config.messages.tools.pub.connection_string,
-        queue=config.messages.tools.pub.queue
+        queue=config.messages.tools.pub.queue,
     )
 
     messages_tools_publisher: MessagePublisher = providers.Selector(
-        config.messages.tools.pub.type,
-        rabbitmq=tools_rabbit_publisher
+        config.messages.tools.pub.type, rabbitmq=tools_rabbit_publisher
     )
 
     # Reports Messages
     reports_rabbit_publisher: MessagePublisher = providers.Singleton(
         RabbitMessagePublisher,
         connection_string=config.messages.reports.pub.connection_string,
-        queue=config.messages.reports.pub.queue
+        queue=config.messages.reports.pub.queue,
     )
 
     messages_reports_publisher: MessagePublisher = providers.Selector(
-        config.messages.reports.pub.type,
-        rabbitmq=reports_rabbit_publisher
+        config.messages.reports.pub.type, rabbitmq=reports_rabbit_publisher
     )
 
     # -- Storage objects --
 
-    dummy_storage = providers.Singleton(
-        DummyStorage
-    )
+    dummy_storage = providers.Singleton(DummyStorage)
 
     # Tools Storage
     tools_ftp_upload_storage = providers.Singleton(
@@ -55,13 +51,13 @@ class Container(containers.DeclarativeContainer):
         user=config.storage_backend.tools.upload.conf.user,
         password=config.storage_backend.tools.upload.conf.password,
         host=config.storage_backend.tools.upload.conf.host,
-        basedir=config.storage_backend.tools.upload.conf.basedir
+        basedir=config.storage_backend.tools.upload.conf.basedir,
     )
 
     tools_upload_storage_service = providers.Selector(
         config.storage_backend.tools.upload.type,
         ftp=tools_ftp_upload_storage,
-        dummy=dummy_storage
+        dummy=dummy_storage,
     )
 
     # Reports Storage
@@ -70,18 +66,17 @@ class Container(containers.DeclarativeContainer):
         user=config.storage_backend.reports.upload.conf.user,
         password=config.storage_backend.reports.upload.conf.password,
         host=config.storage_backend.reports.upload.conf.host,
-        basedir=config.storage_backend.reports.upload.conf.basedir
+        basedir=config.storage_backend.reports.upload.conf.basedir,
     )
 
     reports_upload_storage_service = providers.Selector(
         config.storage_backend.reports.upload.type,
         ftp=reports_ftp_upload_storage,
-        dummy=dummy_storage
+        dummy=dummy_storage,
     )
 
     tools_notification_service = providers.Singleton(
-        UploadNotification,
-        messages_tools_publisher
+        UploadNotification, messages_tools_publisher
     )
 
     # -- CRUD objects --
@@ -90,57 +85,41 @@ class Container(containers.DeclarativeContainer):
     projects_dal = providers.Selector(
         config.crud.projects.type,
         json=providers.Singleton(
-            JSONDatabase,
-            filename=config.crud.projects.conf.filename
-        )
+            JSONDatabase, filename=config.crud.projects.conf.filename
+        ),
     )
 
-    projects_crud = providers.Singleton(
-        SimpleCRUD,
-        projects_dal,
-        Project
-    )
+    projects_crud = providers.Singleton(SimpleCRUD, projects_dal, Project)
 
     # Vulnerabilities
     vulnerabilities_dal = providers.Selector(
         config.crud.vulnerabilities.type,
         json=providers.Singleton(
-            JSONDatabase,
-            filename=config.crud.vulnerabilities.conf.filename
-        )
+            JSONDatabase, filename=config.crud.vulnerabilities.conf.filename
+        ),
     )
 
     vulnerabilities_crud = providers.Singleton(
-        SimpleCRUD,
-        vulnerabilities_dal,
-        Vulnerability
+        SimpleCRUD, vulnerabilities_dal, Vulnerability
     )
 
     vuln_templates = providers.Selector(
         config.crud.vulnerabilities.type,
         json=providers.Singleton(
-            JSONDatabase,
-            filename=config.crud.vuln_templates.conf.filename
-        )
+            JSONDatabase, filename=config.crud.vuln_templates.conf.filename
+        ),
     )
 
     vuln_templates_crud = providers.Singleton(
-        SimpleCRUD,
-        vuln_templates,
-        VulnerabilityTemplate
+        SimpleCRUD, vuln_templates, VulnerabilityTemplate
     )
 
     # Reports
     reports_dal = providers.Selector(
         config.crud.reports.type,
         json=providers.Singleton(
-            JSONDatabase,
-            filename=config.crud.reports.conf.filename
-        )
+            JSONDatabase, filename=config.crud.reports.conf.filename
+        ),
     )
 
-    reports_crud = providers.Singleton(
-        SimpleCRUD,
-        reports_dal,
-        Report
-    )
+    reports_crud = providers.Singleton(SimpleCRUD, reports_dal, Report)
