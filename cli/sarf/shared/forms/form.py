@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import Dict
 
+
 class FieldsRegistry:
     def __init__(self):
         self.__fields = {}
@@ -28,13 +29,14 @@ class Form:
         data = {}
         for field_key in self.__form_fields:
             field = self.__form_fields[field_key]
-            value = self.__fields_registry.get(field["type"]).parse_data(field["name"], field.get('conf'))
+            value = self.__fields_registry.get(field["type"]).parse_data(
+                field["name"], field.get("conf")
+            )
             data[field_key] = value
         return data
 
 
 class FormFactory(ABC):
-
     @abstractmethod
     def create_form(self, form_fields) -> Form:
         pass

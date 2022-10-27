@@ -124,11 +124,13 @@ class VulnerabilitiesCliController:
     def __init__(
         self,
         vuln_crud_handler: SimpleCRUD[Vulnerability] = Provide[
-            Container.vulnerabilities_crud # type: ignore
+            Container.vulnerabilities_crud  # type: ignore
         ],
         vuln_template_crud_handler: SimpleCRUD[
             VulnerabilityTemplate
-        ] = Provide[Container.vuln_templates_crud], # type: ignore
+        ] = Provide[
+            Container.vuln_templates_crud
+        ],  # type: ignore
     ):
         self._vuln_crud_handler = vuln_crud_handler
         self._vuln_template_crud_handler = vuln_template_crud_handler
@@ -150,7 +152,7 @@ class VulnerabilyTemplateCliController:
     def __init__(
         self,
         crud_handler: SimpleCRUD[VulnerabilityTemplate] = Provide[
-            Container.vuln_templates_crud # type: ignore
+            Container.vuln_templates_crud  # type: ignore
         ],
     ):
         self._crud_handler = crud_handler
