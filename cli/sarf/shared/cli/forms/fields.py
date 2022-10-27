@@ -98,7 +98,7 @@ class ForeignSelectField(Generic[T]):
             if response in ("y", ""):
                 selecting_opts = False
 
-        return items
+        return items_list
 
     def parse_data(self, name, conf=None):
 
