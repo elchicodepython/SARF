@@ -131,7 +131,7 @@ def parse_args():
 
     reports_parser = subparsers.add_parser("reports")
     reports_parser.add_argument(
-        "--generate-report", help="Ask a report engine to generate a report"
+        "--get-info", action="store_true", help="Get expanded report data as JSON"
     )
     reports_parser.add_argument(
         "--add-vuln", help="Add a vulnerability to a report"
