@@ -13,6 +13,7 @@ from ..vulnerabilities.base import Vulnerability
 from ..shared.forms.form import Form
 from ..shared.cli.report_utils import get_report_id_or_print_error
 from .app.report import ReportUseCases
+from .app.generator import ReportGenerator
 
 
 class ReportsCliController:
@@ -53,18 +54,23 @@ class ReportsCliController:
             if not report_id:
                 return
 
-            if args.generate_report:
-                print("[+] Sending message to generate report")
+            if args.get_info:
                 vulns = self._vulns_crud.where(
                     [
                         {
                             "field": "uuid",
                             "op": "in",
-                            "value": args.generate_report,
+                            "value": self._use_cases.get_report(
+                                report_id
+                            ).vulnerabilities,
                         }
                     ]
                 )
-                print(list(vulns))
+                report = self._crud_handler.get(report_id)
+                project = self._projects_crud.get(report.project)
+                json_report = ReportGenerator(report, project, vulns).generate_report()
+                print(json_report)
+
             elif args.add_vuln:
                 vulns = self._vulns_crud.where(
                     [
