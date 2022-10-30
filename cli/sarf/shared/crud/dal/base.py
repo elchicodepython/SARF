@@ -20,6 +20,10 @@ class DALHandler(ABC):
         pass
 
     @abstractmethod
+    def update(self, conditions: Iterable[dict], changes: dict):
+        pass
+
+    @abstractmethod
     def add(self, item: dict) -> dict:
         pass
 

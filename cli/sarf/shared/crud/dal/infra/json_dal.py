@@ -43,6 +43,13 @@ class JSONDatabase(DALHandler):
             if value.lower() in row[field].lower()
         ]
 
+    def update(self, conditions: Iterable[dict], changes: dict):
+        for row in self.where(conditions):
+            updated_row = {**row}
+            for change_key, change_value in changes.items():
+                updated_row[change_key] = change_value
+            self.__data[row["uuid"]] = updated_row
+
     def add(self, item: dict) -> dict:
         if item["uuid"] in self.__data:
             raise Exception("Identifier already exist")

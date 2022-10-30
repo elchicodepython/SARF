@@ -1,5 +1,6 @@
 from dataclasses import asdict
 from typing import Optional, Iterable, Generator, TypeVar, Generic
+from xmlrpc.client import Boolean
 
 from .dal.base import DALHandler
 
@@ -23,10 +24,13 @@ class SimpleCRUD(Generic[T]):
         for item in items:
             yield self.__ModelClass(**item)
 
-    def where(self, conditions: dict[str, str]) -> Iterable[T]:
+    def where(self, conditions: Iterable[dict[str, str]]) -> Iterable[T]:
         items = self.__dal_handler.where(conditions)
         for item in items:
             yield self.__ModelClass(**item)
+
+    def update(self, conditions: Iterable[dict], changes: dict):
+        self.__dal_handler.update(conditions, changes)
 
     def contains(self, field: str, value: str) -> Generator[T, None, None]:
         items = self.__dal_handler.contains(field, value)

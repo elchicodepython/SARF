@@ -3,7 +3,7 @@ from dataclasses import dataclass, field
 from ..vulnerabilities.base import Vulnerability
 
 
-@dataclass(frozen=True)
+@dataclass
 class Report:
     uuid: str
     name: str
