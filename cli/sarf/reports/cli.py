@@ -11,6 +11,8 @@ from ..shared.cli.forms.form import cli_fields
 from ..projects.base import Project
 from ..vulnerabilities.base import Vulnerability
 from ..shared.forms.form import Form
+from ..shared.cli.report_utils import get_report_id_or_print_error
+from .app.report import ReportUseCases
 
 
 class ReportsCliController:
@@ -24,6 +26,7 @@ class ReportsCliController:
         self._crud_handler = crud_handler
         self._projects_crud = projects_crud
         self._vulns_crud = vulns_crud
+        self._use_cases = ReportUseCases(crud_handler)
 
     def handle_request(self, args, stdin):
         form = Form(cli_fields)
@@ -46,7 +49,10 @@ class ReportsCliController:
             Report, self._crud_handler, form
         )
         if not handle_cli_crud(cli_crud, args):
-            # handle not simple crud operations
+            report_id = get_report_id_or_print_error()
+            if not report_id:
+                return
+
             if args.generate_report:
                 print("[+] Sending message to generate report")
                 vulns = self._vulns_crud.where(
@@ -59,3 +65,20 @@ class ReportsCliController:
                     ]
                 )
                 print(list(vulns))
+            elif args.add_vuln:
+                vulns = self._vulns_crud.where(
+                    [
+                        {
+                            "field": "uuid",
+                            "op": "=",
+                            "value": args.add_vuln,
+                        }
+                    ]
+                )
+                if list(vulns):
+                    self._use_cases.add_vuln(
+                        report_id,
+                        args.add_vuln
+                    )
+                else:
+                    print("Vulnerability doesn't exist")

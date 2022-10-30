@@ -2,8 +2,7 @@
 
 import argparse
 import sys
-from os import environ
-from typing import List, Optional
+from typing import List
 
 from .reports.cli import ReportsCliController
 from .vulnerabilities.cli import (
@@ -15,6 +14,7 @@ from .projects.cli import ProjectsCliController
 from .storages.base import Storage, UploadContext
 from .notifications.notification import UploadNotification
 from .storages.utils import upload
+from .shared.cli.report_utils import get_report_id
 
 import dependency_injector
 from dependency_injector.wiring import Provide, inject
@@ -83,11 +83,6 @@ def publish_report_output(
         upload_notification,
     )
 
-
-def get_report_id() -> Optional[str]:
-    return environ.get("SARF_REPORT")
-
-
 def parse_args():
     def add_crud_to_parser(parser):
         parser.add_argument("--get", action="store", help="Retrieve a record")
@@ -137,6 +132,9 @@ def parse_args():
     reports_parser = subparsers.add_parser("reports")
     reports_parser.add_argument(
         "--generate-report", help="Ask a report engine to generate a report"
+    )
+    reports_parser.add_argument(
+        "--add-vuln", help="Add a vulnerability to a report"
     )
     reports_parser.add_argument(
         "--report-engine",
