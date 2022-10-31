@@ -2,7 +2,7 @@ from dependency_injector import containers, providers
 from awesome_messages.domain.publisher import MessagePublisher
 from awesome_messages.infra.rabbitmq.publisher import RabbitMessagePublisher
 
-from .notifications.notification import UploadNotification
+from .notifications.notification import ReportRequestNotification, UploadNotification
 from .storages.infra.ftp import FTPStorage
 from .storages.infra.dummy import DummyStorage
 from .shared.crud.simple_crud import SimpleCRUD
@@ -75,8 +75,12 @@ class Container(containers.DeclarativeContainer):
         dummy=dummy_storage,
     )
 
+    # -- Notification objects --
     tools_notification_service = providers.Singleton(
         UploadNotification, messages_tools_publisher
+    )
+    report_notification_service = providers.Singleton(
+        ReportRequestNotification, messages_reports_publisher
     )
 
     # -- CRUD objects --

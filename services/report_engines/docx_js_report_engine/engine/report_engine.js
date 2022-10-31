@@ -1,7 +1,7 @@
 import { createReport } from 'docx-templates';
 import fs from 'fs';
 import zmq from 'zeromq';
-import exec from "child_process";
+import { exec } from "child_process";
 import conf from './conf.js';
 
 
@@ -19,7 +19,9 @@ function sendOutputToSarf(reportUuid, reportFile){
 	});
 }
 
+
 async function generateReport(reportData, output){
+        console.log(reportData);
 	const buffer = await createReport({
 	  template,
 	  data: reportData
@@ -38,7 +40,10 @@ console.log('Worker connected to port 31337');
 sock.subscribe('reports');
 
 sock.on('message', function(msg){
-  reportData = JSON.parse(msg);
+  const msgTxt = msg.toString();
+  console.log(msgTxt);
+  const msgBody = msgTxt.substr(msgTxt.indexOf(" ") + 1);
+  const reportData = JSON.parse(msgBody);
   generateReport(reportData, `${conf.tmpFolder}/${reportData.uuid}`);
 });
 

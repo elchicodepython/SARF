@@ -17,3 +17,14 @@ class UploadNotification:
             }
         )
         self.__message_pub.stop_publishing()
+
+
+class ReportRequestNotification:
+    def __init__(self, message_pub: MessagePublisher):
+        self.__message_pub = message_pub
+
+    def notify(self, upload_output: dict):
+        self.__message_pub.publish(
+            upload_output
+        )
+        self.__message_pub.stop_publishing()
