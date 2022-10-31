@@ -2,6 +2,7 @@ from dependency_injector.wiring import Provide, inject
 
 from ..containers import Container
 from .base import Report
+from ..notifications.notification import ReportRequestNotification
 from ..shared.cli.crud import (
     CLIFormCrudOperations,
     handle_cli_crud,
@@ -23,11 +24,13 @@ class ReportsCliController:
         crud_handler: SimpleCRUD[Report] = Provide[Container.reports_crud],  # type: ignore
         projects_crud: SimpleCRUD[Project] = Provide[Container.projects_crud],  # type: ignore
         vulns_crud: SimpleCRUD[Vulnerability] = Provide[Container.vulnerabilities_crud],  # type: ignore
+        report_request_notificator: ReportRequestNotification = Provide[Container.report_notification_service],  # type: ignore
     ):
         self._crud_handler = crud_handler
         self._projects_crud = projects_crud
         self._vulns_crud = vulns_crud
         self._use_cases = ReportUseCases(crud_handler)
+        self._request_generate_report = report_request_notificator
 
     def handle_request(self, args, stdin):
         form = Form(cli_fields)
@@ -54,7 +57,7 @@ class ReportsCliController:
             if not report_id:
                 return
 
-            if args.get_info:
+            if any([args.get_info, args.generate_report]):
                 vulns = self._vulns_crud.where(
                     [
                         {
@@ -68,8 +71,11 @@ class ReportsCliController:
                 )
                 report = self._crud_handler.get(report_id)
                 project = self._projects_crud.get(report.project)
-                json_report = ReportGenerator(report, project, vulns).generate_report()
-                print(json_report)
+                report_data = ReportGenerator(report, project, vulns).generate_report()
+                if args.get_info:
+                    print(report_data)
+                else:
+                    self._request_generate_report.notify(report_data)
 
             elif args.add_vuln:
                 vulns = self._vulns_crud.where(
