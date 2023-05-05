@@ -1,6 +1,8 @@
 from ..base import Report
 from ...vulnerabilities.base import Vulnerability
 
+from ...shared.crud.dal.base import QueryFilter, FilterType
+
 
 class ReportUseCases:
     def __init__(
@@ -10,7 +12,7 @@ class ReportUseCases:
         self.__reports_crud = reports_crud
 
     def get_report(self, uuid: str) -> Report:
-        rows = self.__reports_crud.where([{"field": "uuid", "op": "=", "value": uuid}])
+        rows = self.__reports_crud.where([QueryFilter("uuid", FilterType.EQ, uuid)])
         if row_list := list(rows):
             return row_list[0]
 
@@ -19,7 +21,7 @@ class ReportUseCases:
         if report:
             self.__reports_crud.update(
                 [
-                    {"field": "uuid", "op": "=", "value": report_uuid}
+                    QueryFilter("uuid", FilterType.EQ, report_uuid)
                 ],
                 {
                     "vulnerabilities": report.vulnerabilities + [vuln]

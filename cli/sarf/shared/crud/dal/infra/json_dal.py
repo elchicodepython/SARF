@@ -1,7 +1,7 @@
 import json
 from typing import Dict, Iterable, Optional
 
-from ..base import DALHandler
+from ..base import DALHandler, QueryFilter, FilterType
 
 
 class JSONDatabase(DALHandler):
@@ -21,20 +21,20 @@ class JSONDatabase(DALHandler):
     def get_all(self) -> Iterable[dict]:
         return self.__data.values()
 
-    # TODO: Refactor this
-    def where(self, conditions: Iterable[dict]) -> Iterable[dict]:
+    def where(self, conditions: Iterable[QueryFilter]) -> Iterable[dict]:
+
+        filter_dispatch = {
+                FilterType.EQ: lambda row, condition: row[condition["field"]] == condition["value"],
+                FilterType.GT: lambda row, condition: row[condition["field"]] > condition["value"],
+                FilterType.LT: lambda row, condition: row[condition["field"]] < condition["value"],
+                FilterType.GE: lambda row, condition: row[condition["field"]] >= condition["value"],
+                FilterType.LE: lambda row, condition: row[condition["field"]] <= condition["value"],
+                FilterType.IN: lambda row, condition: condition["value"] in row[condition["field"]],
+            }
+
         for row in self.__data.values():
-            for condition in conditions:
-                if (
-                    condition["op"] == "="
-                    and row[condition["field"]] == condition["value"]
-                ):
-                    yield row
-                elif (
-                    condition["op"] == "in"
-                    and row[condition["field"]] in condition["value"]
-                ):
-                    yield row
+            if all(filter_dispatch[condition.name](row, condition) for condition in conditions):
+                yield row
 
     def contains(self, field: str, value: str) -> Iterable[dict]:
         return [
@@ -43,7 +43,7 @@ class JSONDatabase(DALHandler):
             if value.lower() in row[field].lower()
         ]
 
-    def update(self, conditions: Iterable[dict], changes: dict):
+    def update(self, conditions: Iterable[QueryFilter], changes: dict):
         for row in self.where(conditions):
             updated_row = {**row}
             for change_key, change_value in changes.items():

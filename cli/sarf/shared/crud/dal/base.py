@@ -1,5 +1,23 @@
 from abc import ABC, abstractmethod
+from dataclasses import dataclass
+from enum import Enum
 from typing import Iterable, Optional
+
+
+class FilterType(Enum):
+    EQ = '='
+    GT = '>'
+    LT = '<'
+    GE = '>='
+    LE = '<='
+    IN = 'in'
+
+
+@dataclass
+class QueryFilter:
+    column: str
+    name: str
+    value: any
 
 
 class DALHandler(ABC):
@@ -16,11 +34,11 @@ class DALHandler(ABC):
         pass
 
     @abstractmethod
-    def where(self, conditions: Iterable[dict]) -> Iterable[dict]:
+    def where(self, conditions: Iterable[QueryFilter]) -> Iterable[dict]:
         pass
 
     @abstractmethod
-    def update(self, conditions: Iterable[dict], changes: dict):
+    def update(self, conditions: Iterable[QueryFilter], changes: dict):
         pass
 
     @abstractmethod
