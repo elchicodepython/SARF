@@ -12,6 +12,7 @@ from ..shared.cli.forms.form import cli_fields
 from ..projects.base import Project
 from ..vulnerabilities.base import Vulnerability
 from ..shared.forms.form import Form
+from ..shared.crud.dal.base import QueryFilter, FilterType
 from ..shared.cli.report_utils import get_report_id_or_print_error
 from .app.report import ReportUseCases
 from .app.generator import ReportGenerator
@@ -60,13 +61,9 @@ class ReportsCliController:
             if any([args.get_info, args.generate_report]):
                 vulns = self._vulns_crud.where(
                     [
-                        {
-                            "field": "uuid",
-                            "op": "in",
-                            "value": self._use_cases.get_report(
+                        QueryFilter("uuid", FilterType.IN, self._use_cases.get_report(
                                 report_id
-                            ).vulnerabilities,
-                        }
+                            ).vulnerabilities)
                     ]
                 )
                 report = self._crud_handler.get(report_id)
@@ -80,11 +77,7 @@ class ReportsCliController:
             elif args.add_vuln:
                 vulns = self._vulns_crud.where(
                     [
-                        {
-                            "field": "uuid",
-                            "op": "=",
-                            "value": args.add_vuln,
-                        }
+                        QueryFilter("uuid", FilterType.EQ, args.add_vuln)
                     ]
                 )
                 if list(vulns):
