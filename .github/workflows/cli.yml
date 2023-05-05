@@ -28,7 +28,7 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Run MyPy
         run: |
-          pip install -r cli/requirements.txt
-          pip install -r cli/test_requirements.txt
-          cd cli
+          pip install -r cli/sarf/requirements.txt
+          pip install -r cli/sarf/test_requirements.txt
+          cd cli/sarf
           mypy sarf
