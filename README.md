@@ -1,6 +1,8 @@
-# SARF-Security-Assesment-and-Reporting-Framework
+<div align="center">
+<img src="docs/assets/common/logo_rtd.png" style="height: 300px"/>
+</div>
 
-![Project Logo](docs/assets/common/logo_rtd.png)
+# SARF - The easy way to capture and trace your cybersecurity audit actions.
 
 > This is currently an ALFA. It is a project that I imagined long ago and now I have begun to build.
 
