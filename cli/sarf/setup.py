@@ -25,7 +25,8 @@ to satisfy your needs.
        "dependency-injector",
         "awesome-messages",
         "pyyaml",
-        "pyinquirer"
+        "pyinquirer",
+        "datalift"
    ],
    entry_points = {
        "console_scripts": [

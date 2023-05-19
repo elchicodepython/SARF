@@ -4,6 +4,7 @@ import argparse
 import sys
 from typing import List
 
+
 from .reports.cli import ReportsCliController
 from .vulnerabilities.cli import (
     VulnerabilitiesCliController,
@@ -11,13 +12,17 @@ from .vulnerabilities.cli import (
 )
 from .projects.cli import ProjectsCliController
 
-from .storages.base import Storage, UploadContext
 from .notifications.notification import UploadNotification
-from .storages.utils import upload
+from .notifications.base import UploadNotificationData, UploadContext
 from .shared.cli.report_utils import get_report_id
 
 import dependency_injector
 from dependency_injector.wiring import Provide, inject
+
+# Previous sarf.storages are now extracted to its own package that
+# can be used independently
+from datalift.storages.base import Storage
+from datalift.storages.utils import generate_filename
 
 from .containers import Container
 
@@ -53,22 +58,20 @@ def publish_tool_output(
     ],
     emitter: str = Provide[Container.config.messages.emitter],
 ):
-    upload(
-        tool_data,
-        UploadContext(emitter, report_id, tags),
-        tools_storage,
-        upload_notification,
-    )
+    filename = f"tool_{generate_filename()}.sarf"
+    storage_info = tools_storage.upload(filename, tool_data)
+    upload_context = UploadContext(emitter=emitter, report_id=report_id, tags=tags)
+    upload_notification.notify(UploadNotificationData(upload_context, storage_info))
     if stdout:
         sys.stdout.buffer.write(tool_data)
 
 
 @inject
 def publish_report_output(
-    tool_data: bytes,
+    report_data: bytes,
     report_id: str,
     tags: List[str],
-    tools_storage: Storage = Provide[
+    reports_storage: Storage = Provide[
         Container.reports_upload_storage_service
     ],
     upload_notification: UploadNotification = Provide[
@@ -76,12 +79,11 @@ def publish_report_output(
     ],
     emitter: str = Provide[Container.config.messages.emitter],
 ):
-    upload(
-        tool_data,
-        UploadContext(emitter, report_id, tags),
-        tools_storage,
-        upload_notification,
-    )
+    filename = f"report_{generate_filename()}.sarf"
+    storage_info = reports_storage.upload(filename, report_data)
+    upload_context = UploadContext(emitter=emitter, report_id=report_id, tags=tags)
+    upload_notification.notify(UploadNotificationData(upload_context, storage_info))
+
 
 def parse_args():
     def add_crud_to_parser(parser):
