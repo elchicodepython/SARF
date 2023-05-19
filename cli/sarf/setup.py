@@ -22,12 +22,12 @@ to satisfy your needs.
    long_description=open('README.md').read(),
    long_description_content_type="text/markdown",
    install_requires=[
-       "dependency-injector",
-        "awesome-messages",
-        "pyyaml",
-        "pyinquirer",
-        "datalift",
-        "sarf_simple_crud"
+        "dependency-injector>=4.41,<5.0",
+        "awesome-messages=>=1.0.0,<2.0",
+        "PyYAML>=6.0,<7.0",
+        "PyInquirer>=1.0.3,<2.0",
+        "datalift>=0.1.2,<1.0",
+        "sarf-simple-crud>=0.1.0,<1.0"
    ],
    entry_points = {
        "console_scripts": [
