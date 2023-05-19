@@ -1,6 +1,18 @@
+from typing import List
 from dataclasses import dataclass
 
-from sarf.storages.base import UploadContext, StorageOutput
+
+@dataclass(frozen=True)
+class UploadContext:
+    emitter: str
+    report_id: str
+    tags: List[str]
+
+
+@dataclass(frozen=True)
+class StorageOutput:
+    storage_type: str
+    path: str
 
 
 @dataclass(frozen=True)
