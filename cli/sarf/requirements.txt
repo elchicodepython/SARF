@@ -1,6 +1,6 @@
-dependency-injector
-awesome-messages
-pyyaml
-pyinquirer
-datalift
-sarf-simple-crud
+dependency-injector>=4.41,<5.0
+awesome-messages=>=1.0.0,<2.0
+PyYAML>=6.0,<7.0
+PyInquirer>=1.0.3,<2.0
+datalift>=0.1.2,<1.0
+sarf-simple-crud>=0.1.0,<1.0
