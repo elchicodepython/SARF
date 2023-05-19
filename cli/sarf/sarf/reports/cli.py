@@ -7,15 +7,16 @@ from ..shared.cli.crud import (
     CLIFormCrudOperations,
     handle_cli_crud,
 )
-from ..shared.crud.simple_crud import SimpleCRUD
 from ..shared.cli.forms.form import cli_fields
 from ..projects.base import Project
 from ..vulnerabilities.base import Vulnerability
 from ..shared.forms.form import Form
-from ..shared.crud.dal.base import QueryFilter, FilterType
 from ..shared.cli.report_utils import get_report_id_or_print_error
 from .app.report import ReportUseCases
 from .app.generator import ReportGenerator
+
+from sarf_simple_crud.simple_crud import SimpleCRUD
+from sarf_simple_crud.dal.base import QueryFilter, FilterType
 
 
 class ReportsCliController:

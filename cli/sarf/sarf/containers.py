@@ -3,14 +3,14 @@ from awesome_messages.domain.publisher import MessagePublisher
 from awesome_messages.infra.rabbitmq.publisher import RabbitMessagePublisher
 
 from .notifications.notification import ReportRequestNotification, UploadNotification
-from .shared.crud.simple_crud import SimpleCRUD
-from .shared.crud.dal.infra.json_dal import JSONDatabase
 from .reports.base import Report
 from .vulnerabilities.base import Vulnerability, VulnerabilityTemplate
 from .projects.base import Project
 
 from datalift.storages.infra.ftp import FTPStorage
 from datalift.storages.infra.dummy import DummyStorage
+from sarf_simple_crud.simple_crud import SimpleCRUD
+from sarf_simple_crud.dal.infra.json_dal import JSONDatabase
 
 
 class Container(containers.DeclarativeContainer):

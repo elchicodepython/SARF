@@ -1,7 +1,7 @@
 from ..base import Report
 from ...vulnerabilities.base import Vulnerability
 
-from ...shared.crud.dal.base import QueryFilter, FilterType
+from sarf_simple_crud.dal.base import QueryFilter, FilterType
 
 
 class ReportUseCases:
