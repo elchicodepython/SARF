@@ -5,7 +5,8 @@ from .base import Vulnerability, VulnerabilityTemplate
 from ..shared.forms.form import Form
 from ..shared.cli.crud import handle_cli_crud, CLIFormCrudOperations
 from ..shared.cli.forms.form import cli_fields
-from ..shared.crud.simple_crud import SimpleCRUD
+
+from sarf_simple_crud.simple_crud import SimpleCRUD
 
 
 # python 3.7 please to keep dictionary order

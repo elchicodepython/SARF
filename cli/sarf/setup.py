@@ -26,7 +26,8 @@ to satisfy your needs.
         "awesome-messages",
         "pyyaml",
         "pyinquirer",
-        "datalift"
+        "datalift",
+        "sarf_simple_crud"
    ],
    entry_points = {
        "console_scripts": [

@@ -4,7 +4,8 @@ from dataclasses import asdict
 from pprint import pprint
 
 from ..forms.form import Form
-from ..crud.simple_crud import SimpleCRUD
+
+from sarf_simple_crud.simple_crud import SimpleCRUD
 
 
 T = TypeVar("T")

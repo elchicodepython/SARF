@@ -1,6 +1,7 @@
 from typing import Generic, TypeVar, Iterable
 from PyInquirer import prompt
-from ...crud.simple_crud import SimpleCRUD
+
+from sarf_simple_crud.simple_crud import SimpleCRUD
 
 
 class InputField:

@@ -5,7 +5,7 @@ from .fields import (
     SelectField,
     ForeignSelectField,
 )
-from ...forms.form import Form, FieldsRegistry
+from ...forms.form import FieldsRegistry
 
 
 cli_fields = FieldsRegistry()

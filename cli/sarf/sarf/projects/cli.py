@@ -3,7 +3,8 @@ from dependency_injector.wiring import Provide, inject
 from ..containers import Container
 from .base import Project
 from ..shared.cli.crud import handle_cli_crud, CLICrudOperations
-from ..shared.crud.simple_crud import SimpleCRUD
+
+from sarf_simple_crud.simple_crud import SimpleCRUD
 
 
 class ProjectsCliController:
