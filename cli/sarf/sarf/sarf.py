@@ -42,7 +42,7 @@ welcome_text = f"""
 If you like this project please share it and give
 a star to it on github. <3
 
-https://github.com/elchicodepython/SARF-Security-Assesment-and-Reporting-Framework
+https://github.com/elchicodepython/SARF
 """
 
 

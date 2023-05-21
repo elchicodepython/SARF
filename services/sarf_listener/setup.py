@@ -16,6 +16,6 @@ setup(
    ],
    description='Dependency required by sarf listeners',
    install_requires=[
-       "sarf>=0.3.0,<1.0",
+       "sarf>=0.3.0,<2.0",
    ],
 )
