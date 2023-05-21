@@ -4,3 +4,7 @@ _build
 .pytest_cache
 dist
 build
+*_data/
+*_log
+node_modules/
+.DS_Store
