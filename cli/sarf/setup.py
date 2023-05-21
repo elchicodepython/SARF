@@ -3,12 +3,12 @@ from setuptools import setup, find_packages
 
 setup(
    name='sarf',
-   version='0.3.0',
+   version='1.0.0-rc.2',
    author='Samuel López Saura',
    author_email='samuellopezsaura@gmail.com',
    packages=find_packages(),
    license='MIT',
-   url='https://github.com/elchicodepython/SARF-Security-Assesment-and-Reporting-Framework',
+   url='https://github.com/elchicodepython/SARF',
    classifiers=[
        "Programming Language :: Python :: 3",
        "License :: OSI Approved :: MIT License",
@@ -23,7 +23,7 @@ to satisfy your needs.
    long_description_content_type="text/markdown",
    install_requires=[
         "dependency-injector>=4.41,<5.0",
-        "awesome-messages=>=1.0.0,<2.0",
+        "awesome-messages>=1.0.0,<2.0",
         "PyYAML>=6.0,<7.0",
         "PyInquirer>=1.0.3,<2.0",
         "datalift>=0.1.2,<1.0",
