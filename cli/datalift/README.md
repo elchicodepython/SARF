@@ -1,7 +1,5 @@
-# Datalift
-
 <div align="center">
-<img src="assets/datalift.png" height="200" width="200"/>
+<img src="assets/datalift.png" height="400" width="400"/>
 </div>
 
 > The tool that help you store and retrieve tools outputs.
