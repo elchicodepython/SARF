@@ -1,0 +1,51 @@
+version: '3'
+
+services:
+
+  ftp:
+    image: garethflowers/ftp-server
+    ports:
+      - '20-21:20-21/tcp'
+      - '40000-40009:40000-40009/tcp'
+    volumes:
+      - ./ftp_data:/home/sarf_ftp_admin
+    environment:
+      - FTP_USER=sarf_ftp_admin
+      - FTP_PASS=sarf_ftp_pass
+    # TODO: Check this FTP image... Seems to be crashing sometimes
+
+  rabbitmq:
+    image: rabbitmq:latest
+    ports:
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      - ./rabbitmq_data:/var/lib/rabbitmq
+    environment:
+      - RABBITMQ_DEFAULT_USER=sarf_queue_admin
+      - RABBITMQ_DEFAULT_PASS=sarf_queue_password
+
+  # Optional SARF listener that inserts tools messages into
+  # a postgresql
+
+  # postgres:
+  #   image: postgres:latest
+  #   ports:
+  #     - 5432:5432
+  #   volumes:
+  #     - ./postgres_data:/var/lib/postgresql/data
+  #   environment:
+  #     - POSTGRES_USER=sarf_pg_admin
+  #     - POSTGRES_PASSWORD=sarf_pg_password
+  #     - POSTGRES_DB=sarf
+
+
+  # sarf_postgres_tools:
+  #   build: "../services/listeners/insert_data_into_database/postgres/tools"
+  #   volumes:
+  #     - ./config.yml:/etc/sarf/config.yml
+  #   depends_on:
+  #     - postgres
+  #     - rabbitmq
+
+
