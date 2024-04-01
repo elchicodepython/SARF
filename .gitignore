@@ -1,7 +1,6 @@
 __pycache__
 *.egg-info
 _build
-_static
 .pytest_cache
 dist
 build

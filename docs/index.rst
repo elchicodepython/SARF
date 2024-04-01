@@ -15,7 +15,6 @@ my day to day that this platform tries to solve.
    :maxdepth: 2
    :caption: Contents:
 
-   common/roadmap_2022
    common/needs
    cli/quickstart
    core/messages
@@ -23,3 +22,10 @@ my day to day that this platform tries to solve.
    listeners/database
    listeners/development
    common/events
+
+If this is useful for you please consider supporting my work so I can keep
+building awesome tools.
+
+.. raw:: html
+
+   <iframe id='kofiframe' src='https://ko-fi.com/elchicodepython/?hidefeed=true&widget=true&embed=true&preview=true' style='border:none;' height='712' title='elchicodepython'></iframe>
