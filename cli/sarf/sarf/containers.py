@@ -3,20 +3,16 @@ from awesome_messages.domain.publisher import MessagePublisher
 from awesome_messages.infra.rabbitmq.publisher import RabbitMessagePublisher
 
 from .notifications.notification import ReportRequestNotification, UploadNotification
-from .reports.base import Report
-from .vulnerabilities.base import Vulnerability, VulnerabilityTemplate
-from .projects.base import Project
 
 from datalift.storages.infra.ftp import FTPStorage
+from datalift.storages.infra.s3 import S3Storage
 from datalift.storages.infra.dummy import DummyStorage
-from sarf_simple_crud.simple_crud import SimpleCRUD
-from sarf_simple_crud.dal.infra.json_dal import JSONDatabase
 
 
 class Container(containers.DeclarativeContainer):
 
     config = providers.Configuration(
-        yaml_files=["sarf_config.yml", "/etc/sarf/config.yml"]
+        yaml_files=["~/.config/sarf_config.yml", "sarf_config.yml", "/etc/sarf/config.yml"]
     )
 
     # -- Messages --
@@ -55,9 +51,18 @@ class Container(containers.DeclarativeContainer):
         basedir=config.storage_backend.tools.upload.conf.basedir,
     )
 
+    tools_s3_upload_storage = providers.Singleton(
+        S3Storage,
+        access_key=config.storage_backend.tools.upload.conf.access_key,
+        secret_key=config.storage_backend.tools.upload.conf.secret_key,
+        endpoint_url=config.storage_backend.tools.upload.conf.endpoint_url,
+        bucket_name=config.storage_backend.tools.upload.conf.bucket,
+    )
+
     tools_upload_storage_service = providers.Selector(
         config.storage_backend.tools.upload.type,
         ftp=tools_ftp_upload_storage,
+        s3=tools_s3_upload_storage,
         dummy=dummy_storage,
     )
 
@@ -83,48 +88,3 @@ class Container(containers.DeclarativeContainer):
     report_notification_service = providers.Singleton(
         ReportRequestNotification, messages_reports_publisher
     )
-
-    # -- CRUD objects --
-
-    # Projects
-    projects_dal = providers.Selector(
-        config.crud.projects.type,
-        json=providers.Singleton(
-            JSONDatabase, filename=config.crud.projects.conf.filename
-        ),
-    )
-
-    projects_crud = providers.Singleton(SimpleCRUD, projects_dal, Project)
-
-    # Vulnerabilities
-    vulnerabilities_dal = providers.Selector(
-        config.crud.vulnerabilities.type,
-        json=providers.Singleton(
-            JSONDatabase, filename=config.crud.vulnerabilities.conf.filename
-        ),
-    )
-
-    vulnerabilities_crud = providers.Singleton(
-        SimpleCRUD, vulnerabilities_dal, Vulnerability
-    )
-
-    vuln_templates = providers.Selector(
-        config.crud.vulnerabilities.type,
-        json=providers.Singleton(
-            JSONDatabase, filename=config.crud.vuln_templates.conf.filename
-        ),
-    )
-
-    vuln_templates_crud = providers.Singleton(
-        SimpleCRUD, vuln_templates, VulnerabilityTemplate
-    )
-
-    # Reports
-    reports_dal = providers.Selector(
-        config.crud.reports.type,
-        json=providers.Singleton(
-            JSONDatabase, filename=config.crud.reports.conf.filename
-        ),
-    )
-
-    reports_crud = providers.Singleton(SimpleCRUD, reports_dal, Report)

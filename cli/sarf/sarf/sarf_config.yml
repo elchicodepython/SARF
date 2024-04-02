@@ -1,61 +1,42 @@
+defaults:
+  rabbitmq_queue_conf: &default_rabbitmq_conf
+    type: "rabbitmq"
+    connection_string: amqp://sarf_queue_admin:sarf_queue_password@localhost:5672/
+
 messages:
   # Name to be sent in messages as the emitter
   # of the actions made with this instance
   emitter: "ethical hacker email or identifier"
 
   tools:
-    pub:
-      type: "rabbitmq"
-      connection_string: ""
+    __baseconf: &__baseconf_tools_messages
+      <<: *default_rabbitmq_conf
       queue: "tools"
+    pub: *__baseconf_tools_messages
+    sub: *__baseconf_tools_messages
 
   reports:
-    pub:
-      type: "rabbitmq"
-      connection_string: ""
-      queue: "tools"
+    __baseconf: &__baseconf_reports_messages
+      <<: *default_rabbitmq_conf
+      queue: "reports"
+    pub: *__baseconf_reports_messages
+    sub: *__baseconf_reports_messages
 
 storage_backend:
   tools:
     upload:
-      type: "ftp"
+      type: "s3"
       conf:
-        user: "sarf"
-        password: "sarf"
-        host: "127.0.0.1"
-        basedir: "/ftp/sarf/tools"
+        access_key: minioaccesskey
+        secret_key: miniosecretkey
+        endpoint_url: http://127.0.0.1:9000
+        bucket: tools
 
   reports:
     upload:
-      type: "ftp"
+      type: "s3"
       conf:
-        user: "sarf"
-        password: "sarf"
-        host: "127.0.0.1"
-        basedir: "/ftp/sarf/reports"
-
-crud:
-  companies:
-    type: json
-    conf:
-      filename: ~/.sarf/data/companies.json
-
-  projects:
-    type: json
-    conf:
-      filename: ~/.sarf/data/projects.json
-
-  reports:
-    type: json
-    conf:
-      filename: ~/.sarf/data/reports.json
-
-  vulnerabilities:
-    type: json
-    conf:
-      filename: ~/.sarf/data/vulnerabilities.json
-
-  vuln_templates:
-    type: json
-    conf:
-      filename: ~/.sarf/data/vuln_templates.json
+        access_key: minioaccesskey
+        secret_key: miniosecretkey
+        endpoint_url: http://127.0.0.1:9000
+        bucket: reports

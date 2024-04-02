@@ -8,21 +8,23 @@
 
 ## Index
 
-- [What is this](#Detected-needs)
-- [Project Docs](https://elchicodepython.github.io/SARF-Security-Assesment-and-Reporting-Framework/)
-- [Installation](https://elchicodepython.github.io/SARF-Security-Assesment-and-Reporting-Framework/cli/quickstart.html#installation)
-- [Roadmap](https://elchicodepython.github.io/SARF-Security-Assesment-and-Reporting-Framework/common/roadmap_2022.html#roadmap-2022)
+- [Project Docs](https://sarf.whathehack.com/)
+- [Installation](https://sarf.whathehack.com/cli/quickstart.html#installation)
 
-## Detected needs
+## Code contributions
 
-When I was working as an ethical hacker I began to notice a series of needs in
-my day to day that this platform tries to solve.
+Creation of new listeners to integrate sarf with your favorite tool is extremely
+welcome. See [Listeners development](http://sarf.whathehack.com/listeners/development.html)
 
-- ![](https://geps.dev/progress/100) Need for custom vulnerability templates
-- ![](https://geps.dev/progress/40) Need for report templates and automatic report generation
-- ![](https://geps.dev/progress/5) Need for security assesment traceability
-- ![](https://geps.dev/progress/70) Need for tools interconnection
+The packages in which sarf rely also accept contributions:
 
+- datalift
+- simple_crud
+
+Regarding the core as SARF is still in a very early stage the core does not accept
+contributions. I don't want anyone to spend time in parts that are very likely to
+be changed. You can still create issues and suggest changes that I will happily
+review.
 
 ## Sponsor this project
 

@@ -27,7 +27,7 @@ to satisfy your needs.
         "PyYAML>=6.0,<7.0",
         "PyInquirer>=1.0.3,<2.0",
         "datalift>=0.1.2,<1.0",
-        "sarf-simple-crud>=0.1.0,<1.0"
+        "click>=8.1,<9.0"
    ],
    entry_points = {
        "console_scripts": [

@@ -7,10 +7,10 @@ these are in plain text or binary.
 In order for sarf to prepare to receive the output of a tool, the `--ingest`
 flag must be added to it.
 
-`nmap 192.168.1.0/24 | sarf --ingest --tags nmap,network:192.168.1.0 --report lbk`
+`nmap 192.168.1.0/24 | sarf ingest --tool nmap --tags network:192.168.1.0 --report KNB-30`
 
 `--tags` flag is optional. It adds tags to the received data that can be
-    very useful to interconnect with other tools.
+    very useful to interconnect it with other tools.
 
 The received data must be associated with a report.
 The chosen report will be obtained from the environment variable SARF_REPORT.
