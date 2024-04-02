@@ -4,8 +4,9 @@
 
 The output of any console tool can be redirected to sarf. It doesn't matter if
 these are in plain text or binary.
-In order for sarf to prepare to receive the output of a tool, the `--ingest`
-flag must be added to it.
+
+In order for sarf to prepare to receive the output of a tool, the `ingest`
+command must be send to it.
 
 `nmap 192.168.1.0/24 | sarf ingest --tool nmap --tags network:192.168.1.0 --report KNB-30`
 

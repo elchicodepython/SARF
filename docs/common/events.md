@@ -1,6 +1,6 @@
 # Talks in events
 
-Register your talk using SARF this page.
+Create an issue in your talk using SARF in [this page](https://github.com/elchicodepython/SARF/issues).
 
 Please follow the following format to add a presentation in this page:
 
@@ -13,7 +13,7 @@ Language: en|es|...
 
 Description: Description (2-5 lines)
 
-video from youtube/vimeo/etc
+video (if available) from youtube/vimeo/etc
 
 slides (if published) from slideshare or similar
 

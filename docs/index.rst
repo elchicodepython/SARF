@@ -12,7 +12,6 @@ SARF | The Pentester Pipeline
    :maxdepth: 2
    :caption: Contents:
 
-   common/needs
    cli/quickstart
    core/messages
    core/tags

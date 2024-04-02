@@ -13,7 +13,7 @@ This listener retrieve messages from SARF tools and write them into a Postgresql
 
 ### Configuration
 
-Configuration should be added inside /etc/sarf.config.yml.
+Configuration should be added inside /etc/sarf/config.yml.
 
 ```yaml
 listeners:
